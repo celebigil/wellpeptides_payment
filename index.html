@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Well Payment (dev)</title>
+</head>
+<body>
+    <!--
+        Dev-only stub of the page data the BE Jinja shell would inject.
+        Edit freely while iterating on block renderers. In production
+        this script is replaced by one rendered server-side.
+    -->
+    <script>
+        window.__PAGE_DATA__ = {
+            id: 1,
+            slug: null,
+            title: "Dev Landing",
+            ogTitle: "Premium Research Peptides",
+            ogDescription: "Trusted by 5,000+ researchers.",
+            ogImageUrl: null,
+            paypalUrl: "https://www.paypal.com/checkoutnow?token=DEMO",
+            isDefault: true,
+            isActive: true,
+            blocksJson: {
+                blocks: [
+                    {
+                        id: "h1",
+                        type: "hero",
+                        data: {
+                            headline: "Premium Research Peptides",
+                            subheadline: "Pharmaceutical-grade, third-party tested.",
+                            image_url: "",
+                            bg_color: "#f4f1ea"
+                        }
+                    },
+                    {
+                        id: "t1",
+                        type: "text",
+                        data: { html: "<p>Trusted by <strong>5,000+</strong> researchers worldwide.</p>" }
+                    },
+                    {
+                        id: "l1",
+                        type: "list",
+                        data: {
+                            style: "checkmarks",
+                            items: ["Free shipping over $200", "Discreet packaging", "Lab-tested purity"]
+                        }
+                    },
+                    {
+                        id: "c1",
+                        type: "cta",
+                        data: { label: "Continue to Secure Checkout", url: null, style: "primary" }
+                    }
+                ]
+            }
+        };
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
