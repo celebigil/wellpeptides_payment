@@ -1,21 +1,22 @@
 import logo from "../assets/logo-well_peptides.png";
 
-// Deliberately minimal compared to the main storefront header — no nav,
-// no cart, no auth. The whole point of this surface is to funnel to a
-// single PayPal CTA, so removing every other affordance is the design.
+// Visually mirrors the new_wel storefront header — same height, blurred
+// translucent backdrop, same logo sizing. Intentionally strips the nav,
+// cart, search and auth icons: on a payment funnel surface, every extra
+// affordance is a reason for the visitor not to tap the CTA.
 export default function SiteHeader() {
     return (
         <header className="ep-site-header">
             <div className="ep-site-header__inner">
                 <a href="https://wellpeptides.com" className="ep-site-header__brand">
-                    <img src={logo} alt="Well (+) Peptides" className="ep-site-header__logo" />
+                    <img src={logo} alt="Well Peptides" className="ep-site-header__logo" />
                 </a>
                 <span className="ep-site-header__badge">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z"
-                              stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-                        <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="2"
-                              strokeLinecap="round" strokeLinejoin="round"/>
+                        <rect x="3" y="11" width="18" height="11" rx="2"
+                              stroke="currentColor" strokeWidth="1.5"/>
+                        <path d="M7 11V7a5 5 0 0110 0v4"
+                              stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                     </svg>
                     Secure checkout
                 </span>

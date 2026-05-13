@@ -4,7 +4,13 @@ import react from "@vitejs/plugin-react";
 // The BE Jinja shell references the bundle at fixed paths
 // (assets/index.js, assets/index.css) so it doesn't have to read a
 // manifest. Deterministic names are mandatory — Vite hashes by default.
-export default defineConfig({
+//
+// `base` must be absolute in production: payment.wellpeptides.com loads
+// the HTML from Cloud Run, but assets (logo, fonts, JS, CSS) live on
+// Cloudflare Pages. Without an absolute base, the browser resolves
+// relative URLs against the BE host and 404s on every asset.
+export default defineConfig(({ command }) => ({
+    base: command === "build" ? "https://wellpeptides-payment.pages.dev/" : "/",
     plugins: [react()],
     build: {
         rollupOptions: {
@@ -23,4 +29,4 @@ export default defineConfig({
     server: {
         port: 5174,
     },
-});
+}));
