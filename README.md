@@ -1,6 +1,6 @@
 # well_payment
 
-React (Vite) SPA bundle for the `payment.wellpeptides.com` micro-CMS.
+React (Vite) SPA bundle for the `accesswellsociety.com` micro-CMS.
 
 ## Role in the system
 
@@ -13,7 +13,7 @@ JavaScript.
 Instagram crawler / browser
         │
         ▼
-payment.wellpeptides.com  ──▶  Cloud Run (new_well_be)
+accesswellsociety.com  ──▶  Cloud Run (new_well_be)
                                  │  ← renders Jinja shell with meta tags
                                  │     and injects window.__PAGE_DATA__
                                  ▼
@@ -42,7 +42,7 @@ To test the full integration locally:
 1. Run the backend: `cd ../new_well_be && uvicorn app.main:app --reload`
 2. Set `EXTERNAL_PAYMENT_SPA_BASE=http://localhost:5174` in the BE env.
 3. Curl with the payment host:
-   `curl -H "Host: payment.wellpeptides.com" http://localhost:8000/`
+   `curl -H "Host: accesswellsociety.com" http://localhost:8000/`
 
 ## Production build
 
@@ -72,7 +72,7 @@ read a manifest.
 Custom domain is **not** assigned here — the project URL
 (`well-payment.pages.dev` or similar) is referenced by the backend via
 `EXTERNAL_PAYMENT_SPA_BASE`. The user-facing domain
-`payment.wellpeptides.com` points to Cloud Run, not Pages.
+`accesswellsociety.com` points to Cloud Run, not Pages.
 
 ## Adding a new block type
 

@@ -5,10 +5,11 @@ import react from "@vitejs/plugin-react";
 // (assets/index.js, assets/index.css) so it doesn't have to read a
 // manifest. Deterministic names are mandatory — Vite hashes by default.
 //
-// `base` must be absolute in production: payment.wellpeptides.com loads
-// the HTML from Cloud Run, but assets (logo, fonts, JS, CSS) live on
-// Cloudflare Pages. Without an absolute base, the browser resolves
-// relative URLs against the BE host and 404s on every asset.
+// `base` must be absolute in production: the landing host (set by
+// EXTERNAL_PAYMENT_HOST on the BE) loads the HTML from Cloud Run, but
+// assets (logo, fonts, JS, CSS) live on Cloudflare Pages. Without an
+// absolute base, the browser resolves relative URLs against the BE host
+// and 404s on every asset.
 export default defineConfig(({ command }) => ({
     base: command === "build" ? "https://wellpeptides-payment.pages.dev/" : "/",
     plugins: [react()],

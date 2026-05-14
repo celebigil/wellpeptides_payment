@@ -1,11 +1,12 @@
-# Deployment guide — payment.wellpeptides.com
+# Deployment guide — accesswellsociety.com
 
 End-to-end checklist for taking the External Payments stack live.
 Estimated total time: ~45 minutes once you have the credentials in hand.
 
 ## Prerequisites
 
-- Cloudflare account with `wellpeptides.com` zone managed
+- DNS provider with the `accesswellsociety.com` zone managed (instructions below assume Cloudflare; same idea on Route53 / Google Domains)
+- Cloud Run domain ownership verification done for `accesswellsociety.com` (apex domains require `gcloud domains verify` + Search Console TXT record before mapping)
 - GCP project with Cloud Run service `new-well-be` already deployed
 - PostHog account (free tier is fine) — only needed for M5
 - `gcloud` CLI authenticated
@@ -32,7 +33,7 @@ SELECT COUNT(*) FROM external_payment_pages;  -- expect 0
 Add these to `new_well_be/env_full.yaml` (or set in Cloud Run console):
 
 ```yaml
-EXTERNAL_PAYMENT_HOST: payment.wellpeptides.com
+EXTERNAL_PAYMENT_HOST: accesswellsociety.com
 EXTERNAL_PAYMENT_SPA_BASE: https://well-payment.pages.dev
 ```
 
@@ -46,22 +47,22 @@ gcloud run deploy new-well-be \
     --env-vars-file new_well_be/env_full.yaml
 ```
 
-## 3. Map payment.wellpeptides.com to Cloud Run
+## 3. Map accesswellsociety.com to Cloud Run
 
 Cloud Run side:
 ```bash
 gcloud beta run domain-mappings create \
     --service new-well-be \
-    --domain payment.wellpeptides.com \
+    --domain accesswellsociety.com \
     --region europe-west1
 ```
 
-Note the CNAME target it returns (typically `ghs.googlehosted.com`).
+Apex domains can't take a plain CNAME, so Cloud Run returns A + AAAA
+records (typically `216.239.32.21` etc. and IPv6 equivalents) instead of
+`ghs.googlehosted.com`. Note them all.
 
-Cloudflare side:
-1. DNS → Add CNAME:
-    - Name: `payment`
-    - Target: `ghs.googlehosted.com.` (or whatever the previous step gave)
+Cloudflare side (or whichever DNS provider holds the zone):
+1. DNS → add each A and AAAA record returned, with **Name `@`** (apex).
     - Proxy: **DNS only** (grey cloud) for the first hour while certs
       provision. Once Cloud Run shows the cert as `ACTIVE` you can
       enable the orange cloud if you want CF caching/WAF.
@@ -71,13 +72,13 @@ Cloudflare side:
 Wait until the cert is `ACTIVE`:
 ```bash
 gcloud beta run domain-mappings describe \
-    --domain payment.wellpeptides.com \
+    --domain accesswellsociety.com \
     --region europe-west1
 ```
 
 Sanity check:
 ```bash
-curl -I https://payment.wellpeptides.com/
+curl -I https://accesswellsociety.com/
 # expect: HTTP/2 404 (no default page configured yet) or 200 if you seeded one
 ```
 
@@ -102,7 +103,7 @@ Deploy. Take the assigned URL (e.g. `well-payment.pages.dev`) and
 update `EXTERNAL_PAYMENT_SPA_BASE` on the BE (step 2) if it differs
 from the default.
 
-**Do not** attach `payment.wellpeptides.com` as a custom domain on the
+**Do not** attach `accesswellsociety.com` as a custom domain on the
 Pages project — that hostname belongs to Cloud Run.
 
 ## 5. Create the first page in BO
@@ -124,7 +125,7 @@ Pages project — that hostname belongs to Cloud Run.
 1. Create a free PostHog project.
 2. Copy the Project API key (starts with `phc_…`).
 3. In CF Pages env: `VITE_POSTHOG_KEY=phc_...` → trigger a redeploy.
-4. Browse to `payment.wellpeptides.com` once; verify the
+4. Browse to `accesswellsociety.com` once; verify the
    `ep_page_view` event appears in PostHog within ~30 seconds.
 5. Define dashboards as needed (or skip — events are stored anyway).
 
@@ -132,7 +133,7 @@ Pages project — that hostname belongs to Cloud Run.
 
 Run through this list with each new page that's important:
 
-- [ ] `curl -I https://payment.wellpeptides.com/` returns 200
+- [ ] `curl -I https://accesswellsociety.com/` returns 200
 - [ ] Open in browser: hero + CTA visible, CTA goes to PayPal
 - [ ] Open in iPhone Safari (or DevTools mobile emulation): layout sane
 - [ ] Facebook Sharing Debugger: <https://developers.facebook.com/tools/debug/>
@@ -149,5 +150,5 @@ If anything breaks live:
 - Bad page content: BO → edit the page → uncheck **Active** → save.
 - Bad bundle: roll back the CF Pages deploy to the previous build.
 - BE issue: `gcloud run services update-traffic new-well-be --to-revisions=PREVIOUS=100`.
-- Worst case: remove the DNS CNAME for `payment` — Instagram links 404
-  until restored, but no other surface is affected.
+- Worst case: remove the apex A/AAAA records for `accesswellsociety.com`
+  — Instagram links 404 until restored, but no other surface is affected.
