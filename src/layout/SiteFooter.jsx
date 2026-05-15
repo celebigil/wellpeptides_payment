@@ -1,19 +1,8 @@
-import logo from "../assets/logo-well-society.svg";
-
 // The landing is shown to cold Instagram traffic that has never seen
-// the brand. A real footer with contact + legal links + verified marks
-// is the single highest-leverage trust signal we can show, so this one
-// is intentionally heavier than the storefront's funnel-protecting
-// minimal footer.
-
-// Landing brand is Well Society — kept distinct from the storefront's
-// `wellpeptides.com` so Instagram visitors never see two competing
-// names. All buyer-facing strings and links point at wellsociety.com.
-const STOREFRONT_ORIGIN = "https://wellsociety.com";
+// the brand. The footer keeps just the trust strip + bottom copyright;
+// the contact/legal grid and disclaimer were removed by request and
+// live in git history if they need to come back.
 const SUPPORT_EMAIL = "support@wellsociety.com";
-
-const DISCLAIMER =
-    "";
 
 export default function SiteFooter() {
     const year = new Date().getFullYear();
@@ -50,73 +39,6 @@ export default function SiteFooter() {
                     </span>
 
                 </div>
-
-                <div className="ep-site-footer__grid">
-                    <div className="ep-site-footer__brand">
-                        <a href={STOREFRONT_ORIGIN} aria-label="Well Society home">
-                            <img src={logo} alt="Well Society" className="ep-site-footer__logo" />
-                        </a>
-                        <p className="ep-site-footer__tagline">
-                            Research-grade peptides, delivered with care since 2021.
-                        </p>
-                    </div>
-
-                    <div className="ep-site-footer__col">
-                        <h4 className="ep-site-footer__col-title">Support</h4>
-                        <ul>
-                            <li>
-                                <a href={`${STOREFRONT_ORIGIN}/contact`} rel="noopener" target="_blank">
-                                    Contact Us
-                                </a>
-                            </li>
-                            <li>
-                                <a href={`${STOREFRONT_ORIGIN}/faq`} rel="noopener" target="_blank">
-                                    Help &amp; FAQ
-                                </a>
-                            </li>
-                            <li>
-                                <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="ep-site-footer__col">
-                        <h4 className="ep-site-footer__col-title">Legal</h4>
-                        <ul>
-                            <li>
-                                <a href={`${STOREFRONT_ORIGIN}/privacy-policy`} rel="noopener" target="_blank">
-                                    Privacy Policy
-                                </a>
-                            </li>
-                            <li>
-                                <a href={`${STOREFRONT_ORIGIN}/terms`} rel="noopener" target="_blank">
-                                    Terms of Service
-                                </a>
-                            </li>
-                            <li>
-                                <a href={`${STOREFRONT_ORIGIN}/refund-policy`} rel="noopener" target="_blank">
-                                    Refund Policy
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <div className="ep-site-footer__col">
-                        <h4 className="ep-site-footer__col-title">Payments</h4>
-                        <p className="ep-site-footer__paypal">
-                            <svg width="64" height="18" viewBox="0 0 100 28" aria-label="PayPal">
-                                <text x="0" y="20" fontFamily="Arial, sans-serif"
-                                      fontSize="20" fontWeight="700" fill="#003087">Pay</text>
-                                <text x="40" y="20" fontFamily="Arial, sans-serif"
-                                      fontSize="20" fontWeight="700" fill="#009cde">Pal</text>
-                            </svg>
-                            <span>Processed securely by PayPal.<br />We never see your card details.</span>
-                        </p>
-                    </div>
-                </div>
-
-                <p className="ep-site-footer__disclaimer">{DISCLAIMER}</p>
 
                 <div className="ep-site-footer__bottom">
                     <span className="ep-site-footer__copyright">
