@@ -62,7 +62,13 @@ export default function CTA({ blockId, data, page }) {
                     <path d="M7 11V7a5 5 0 0110 0v4"
                           stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                 </svg>
-                Secure checkout via PayPal
+                <span className="ep-cta__reassurance-text">
+                    Secure PayPal Checkout
+                    <span className="ep-cta__reassurance-dot" aria-hidden="true">·</span>
+                    256-bit SSL
+                    <span className="ep-cta__reassurance-dot" aria-hidden="true">·</span>
+                    Buyer Protection Included
+                </span>
             </p>
         </div>
     );

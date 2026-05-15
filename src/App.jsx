@@ -6,6 +6,11 @@ import List from "./blocks/List.jsx";
 import CTA from "./blocks/CTA.jsx";
 import Spacer from "./blocks/Spacer.jsx";
 import Divider from "./blocks/Divider.jsx";
+import TrustBadges from "./blocks/TrustBadges.jsx";
+import StepIndicator from "./blocks/StepIndicator.jsx";
+import OrderSummary from "./blocks/OrderSummary.jsx";
+import Testimonial from "./blocks/Testimonial.jsx";
+import Faq from "./blocks/Faq.jsx";
 import SiteHeader from "./layout/SiteHeader.jsx";
 import SiteFooter from "./layout/SiteFooter.jsx";
 
@@ -18,6 +23,11 @@ const RENDERERS = {
     cta: CTA,
     spacer: Spacer,
     divider: Divider,
+    trust_badges: TrustBadges,
+    step_indicator: StepIndicator,
+    order_summary: OrderSummary,
+    testimonial: Testimonial,
+    faq: Faq,
 };
 
 function Blocks({ blocks, page }) {
