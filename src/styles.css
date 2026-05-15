@@ -1260,7 +1260,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     z-index: 2;
     max-width: 880px;
     margin: 0 auto;
-    padding: 64px 16px 200px;
+    padding: 64px 16px 96px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -1385,7 +1385,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .lv-cards {
     position: relative;
     z-index: 1;
-    margin-top: -140px; /* overlap into the hero's bottom curve */
+    /* Cards sit cleanly under the hero on the cream surface — used to
+       overlap into the hero's bottom curve with margin-top:-140px but
+       the dark band reading through the card backdrop looked muddy. */
+    margin-top: 48px;
     padding: 0 24px 80px;
 }
 .lv-cards__grid {
@@ -1481,7 +1484,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     .lv-cards__grid {
         grid-template-columns: 1fr;
     }
-    .lv-cards { margin-top: -100px; }
+    .lv-cards { margin-top: 32px; }
 }
 
 @media (max-width: 640px) {
@@ -1490,7 +1493,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     .lv-nav__logo { height: 18px; }
     .lv-nav__badge { font-size: 12px; }
     .lv-hero__content {
-        padding: 44px 4px 160px;
+        padding: 44px 4px 72px;
         gap: 20px;
     }
     .lv-hero__eyebrow { font-size: 11px; letter-spacing: 0.18em; }
