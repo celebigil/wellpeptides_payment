@@ -178,15 +178,15 @@ function FeatureList({ heading, headingIcon, items }) {
 export default function LongevityLanding({ page }) {
     const cfg = page?.blocksJson?.longevity || {};
     const eyebrow = cfg.eyebrow || "Longevity Assessment";
-    const headlineTop = cfg.headlineTop || "Miami's First";
-    const headlineBottom = cfg.headlineBottom || "Social Longevity Center";
+    const headlineTop = cfg.headline_top || "Miami's First";
+    const headlineBottom = cfg.headline_bottom || "Social Longevity Center";
     const subheadline = cfg.subheadline ||
         "A comprehensive, science-driven assessment that uncovers your biological age and informs a personalized longevity program designed for you.";
     const amount = cfg.amount;
     const currency = cfg.currency || "USD";
-    const ctaLabel = cfg.ctaLabel || "Complete Secure Payment";
-    const ctaUrl = cfg.ctaUrl;
-    const blockId = cfg.blockId || "longevity_cta";
+    const ctaLabel = cfg.cta_label || "Complete Secure Payment";
+    const ctaUrl = cfg.cta_url;
+    const blockId = cfg.block_id || "longevity_cta";
 
     const priceText = formatPrice(amount, currency);
     const href = buildHref({ blockId, amount, ctaUrl, page });
@@ -258,12 +258,12 @@ export default function LongevityLanding({ page }) {
             <section className="lv-cards">
                 <div className="lv-cards__grid">
                     <FeatureList
-                        heading={cfg.includesHeading || "Your assessment includes"}
+                        heading={cfg.includes_heading || "Your assessment includes"}
                         headingIcon="sparkle"
                         items={includes}
                     />
                     <FeatureList
-                        heading={cfg.notesHeading || "Important notes"}
+                        heading={cfg.notes_heading || "Important notes"}
                         headingIcon="shield"
                         items={notes}
                     />
