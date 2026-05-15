@@ -1120,7 +1120,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     margin: 0;
     font-family: var(--font-sans);
     font-size: var(--text-sm);
-    font-weight: var(--font-regular);
+    font-weight: var(--font-light);
     line-height: var(--leading-relaxed);
     color: var(--text-secondary);
 }
