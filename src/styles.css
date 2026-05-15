@@ -1004,15 +1004,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ── Block: FeatureCards ──────────────────────────────────────────
    2-4 cards side by side on tablet+; stacks vertically on mobile. Each
    card carries a large mavi icon, Aeonik Fono title, short description.
-   Designed to sit right under the auto-rendered trust strip and expand
-   on the trust signals with one extra line of context per pillar. */
+
+   Breaks out of the 640px page column so the cards have real breathing
+   room. The grid uses `repeat(auto-fit, minmax(...))` so 2 cards take
+   half the row each, 3 cards take a third, 4 cards take a quarter —
+   admin's card count drives column count automatically. */
 
 .ep-feature-cards {
-    margin: var(--space-10) auto;
-    max-width: 1080px;
+    /* Full-bleed wrapper (same trick the hero uses) so the grid can
+       reach ~1080px wide on desktop even though .ep-page caps at 640px. */
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    width: 100vw;
+    padding: 0 var(--container-padding);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-10);
 }
 .ep-feature-cards__title {
-    margin: 0 0 var(--space-6);
+    max-width: 1080px;
+    margin: 0 auto var(--space-6);
     font-family: var(--font-serif);
     font-size: clamp(20px, 2.4vw, 26px);
     font-weight: var(--font-light);
@@ -1021,34 +1032,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .ep-feature-cards__grid {
     list-style: none;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
+    max-width: 1080px;
     display: grid;
     gap: var(--space-4);
-    grid-template-columns: 1fr;
-}
-@media (min-width: 640px) {
-    .ep-feature-cards__grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .ep-feature-cards__grid > .ep-feature-cards__item:last-child:nth-child(odd) {
-        grid-column: span 2;
-        max-width: calc(50% - var(--space-2));
-        margin: 0 auto;
-    }
-}
-@media (min-width: 960px) {
-    .ep-feature-cards__grid {
-        /* 3- or 4-card layouts both look great at 3-col; 4 cards wrap
-           the 4th on its own line below — admin can keep adding without
-           breaking the visual rhythm. */
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .ep-feature-cards__grid > .ep-feature-cards__item:last-child:nth-child(odd) {
-        grid-column: auto;
-        max-width: none;
-        margin: 0;
-    }
+    /* `auto-fit` collapses empty tracks → with 2 items each fills half
+       the row (~520px), with 3 items each gets ~340px, with 4 items
+       each gets ~250px. Min 240px keeps the title legible. */
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 .ep-feature-cards__item {
     display: flex;
