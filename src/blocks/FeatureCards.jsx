@@ -15,10 +15,15 @@ function withLineBreaks(text) {
     ));
 }
 
-// 2-4 feature cards in a responsive grid (auto-fit by item count).
-// Each card: icon + title on the same row, description below. Sits
-// right under the trust strip to expand on the trust signals with one
-// extra line of context per pillar.
+// Responsive 2-up grid of feature cards. Visually mirrors the longevity
+// template's bottom cards: white surface, soft border, Cormorant title
+// with the icon inline, then either a short paragraph OR a vertical
+// bullet list (each row gets its own icon).
+//
+// Each `items[i]` may carry:
+//   - description: single paragraph rendered under the title
+//   - bullets: list of {icon, text} sub-rows rendered as a list
+// At least one of the two is expected (BO + BE enforce this).
 export default function FeatureCards({ data }) {
     const items = (data && Array.isArray(data.items)) ? data.items : [];
     if (items.length === 0) return null;
@@ -27,21 +32,39 @@ export default function FeatureCards({ data }) {
         <section className="ep-feature-cards" aria-label={title || "Features"}>
             {title ? <h3 className="ep-feature-cards__title">{title}</h3> : null}
             <ul className="ep-feature-cards__grid">
-                {items.map((it, i) => (
-                    <li key={i} className="ep-feature-cards__item">
-                        <div className="ep-feature-cards__header">
-                            <span className="ep-feature-cards__icon" aria-hidden="true">
-                                <Icon name={it.icon || "shield"} size={24} />
-                            </span>
-                            <h4 className="ep-feature-cards__heading">
-                                {withLineBreaks(it.title)}
-                            </h4>
-                        </div>
-                        <p className="ep-feature-cards__desc">
-                            {withLineBreaks(it.description)}
-                        </p>
-                    </li>
-                ))}
+                {items.map((it, i) => {
+                    const bullets = Array.isArray(it.bullets) ? it.bullets : [];
+                    return (
+                        <li key={i} className="ep-feature-cards__item">
+                            <div className="ep-feature-cards__header">
+                                <span className="ep-feature-cards__icon" aria-hidden="true">
+                                    <Icon name={it.icon || "shield"} size={22} />
+                                </span>
+                                <h4 className="ep-feature-cards__heading">
+                                    {withLineBreaks(it.title)}
+                                </h4>
+                            </div>
+                            {bullets.length > 0 ? (
+                                <ul className="ep-feature-cards__list">
+                                    {bullets.map((b, j) => (
+                                        <li key={j} className="ep-feature-cards__row">
+                                            <span className="ep-feature-cards__row-icon" aria-hidden="true">
+                                                <Icon name={b.icon || "shield"} size={18} />
+                                            </span>
+                                            <span className="ep-feature-cards__row-text">
+                                                {withLineBreaks(b.text)}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : it.description ? (
+                                <p className="ep-feature-cards__desc">
+                                    {withLineBreaks(it.description)}
+                                </p>
+                            ) : null}
+                        </li>
+                    );
+                })}
             </ul>
         </section>
     );

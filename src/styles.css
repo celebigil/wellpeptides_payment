@@ -1031,9 +1031,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    half the row each, 3 cards take a third, 4 cards take a quarter —
    admin's card count drives column count automatically. */
 
+/* Visually mirrors the longevity template's bottom cards (.lv-card):
+   white surface, rounded 20px, soft border, Cormorant Garamond title
+   with the icon inline on the left (no bg box), DM Sans body. The data
+   shape is unchanged — each item is still rendered as one card with
+   icon + title + description. */
 .ep-feature-cards {
     /* Full-bleed wrapper (same trick the hero uses) so the grid can
-       reach ~1080px wide on desktop even though .ep-page caps at 640px. */
+       reach ~1100px wide on desktop even though .ep-page caps at 640px. */
     position: relative;
     left: 50%;
     margin-left: -50vw;
@@ -1043,113 +1048,136 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     margin-bottom: var(--space-10);
 }
 .ep-feature-cards__title {
-    max-width: 1080px;
+    max-width: 1100px;
     margin: 0 auto var(--space-6);
-    font-family: var(--font-serif);
-    font-size: clamp(20px, 2.4vw, 26px);
-    font-weight: var(--font-light);
-    color: var(--text-primary);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(22px, 2.4vw, 28px);
+    font-weight: 500;
+    color: #1a2035;
+    letter-spacing: -0.005em;
     text-align: center;
 }
 .ep-feature-cards__grid {
     list-style: none;
     margin: 0 auto;
     padding: 0;
-    max-width: 1080px;
+    max-width: 1100px;
     display: grid;
-    /* Mobile default: force 2 columns so cards always sit side-by-side
-       on phones — `auto-fit minmax(240, 1fr)` collapses to a single
-       column under 256px which is too narrow for our viewport. */
-    gap: var(--space-3);
-    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    /* Match the longevity layout: two equal columns on tablet+,
+       single column on phones. */
+    grid-template-columns: 1fr 1fr;
 }
-@media (min-width: 640px) {
+@media (max-width: 720px) {
     .ep-feature-cards__grid {
-        /* Tablet+ goes back to auto-fit — 2 cards fill the row, 3 cards
-           take a third, 4 cards take a quarter (down to 240px min). */
-        gap: var(--space-4);
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 }
 .ep-feature-cards__item {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-3);
-    padding: var(--space-6);
-    background: var(--color-white);
-    border: 1px solid var(--color-gray-200);
-    border-radius: var(--card-radius, 16px);
-    box-shadow: 0 4px 16px rgba(12, 17, 29, 0.04);
-    transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+    gap: 16px;
+    padding: 36px 36px 40px;
+    background: #ffffff;
+    border: 1px solid #e8e4de;
+    border-radius: 20px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
 }
-.ep-feature-cards__item:hover {
-    border-color: var(--color-gray-300);
-    box-shadow: 0 8px 24px rgba(12, 17, 29, 0.06);
-}
-/* Icon + title share a row above the description. Icon is fixed-size,
-   title fills the remaining width and wraps naturally on long copy. */
+/* Icon + title share a row above the description — icon sits flush
+   without a backing tile (matches .lv-card__header). */
 .ep-feature-cards__header {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: 14px;
     width: 100%;
 }
 .ep-feature-cards__icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: rgba(107, 168, 226, 0.12);
-    color: var(--color-brand);
+    color: #3a5af9;
     flex-shrink: 0;
+}
+.ep-feature-cards__icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
 }
 .ep-feature-cards__heading {
     margin: 0;
-    font-family: var(--font-serif);
-    font-size: var(--text-lg);
-    font-weight: var(--font-semibold);
-    color: var(--text-primary);
-    line-height: var(--leading-snug);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: #1a2035;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
     flex: 1;
     min-width: 0;
 }
 .ep-feature-cards__desc {
     margin: 0;
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: var(--font-light);
-    line-height: var(--leading-relaxed);
-    color: var(--text-secondary);
+    font-family: 'DM Sans', var(--font-sans);
+    font-size: 0.93rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #3a4060;
 }
+/* Bullet list inside a feature card — each row gets its own icon, like
+   the longevity .lv-card__list. Used when the BO supplies `bullets:
+   [{icon, text}]` for an item; otherwise the card falls back to the
+   single-paragraph `.ep-feature-cards__desc`. */
+.ep-feature-cards__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.ep-feature-cards__row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-family: 'DM Sans', var(--font-sans);
+    font-size: 0.93rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #3a4060;
+}
+.ep-feature-cards__row-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: #3a5af9;
+    opacity: 0.75;
+}
+.ep-feature-cards__row-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+}
+.ep-feature-cards__row-text { flex: 1; }
 
-/* Mobile compaction — cards become ~160px wide once forced to 2-col,
-   so trim padding, icon, type sizes so the content still breathes. */
 @media (max-width: 640px) {
     .ep-feature-cards__item {
-        padding: var(--space-4);
-        gap: var(--space-2);
-    }
-    .ep-feature-cards__header {
-        gap: var(--space-2);
-    }
-    .ep-feature-cards__icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-    }
-    .ep-feature-cards__icon svg {
-        width: 18px;
-        height: 18px;
+        padding: 28px 24px 32px;
+        gap: 14px;
     }
     .ep-feature-cards__heading {
-        font-size: var(--text-base);
+        font-size: 1.3rem;
+    }
+    .ep-feature-cards__icon svg {
+        width: 20px;
+        height: 20px;
     }
     .ep-feature-cards__desc {
-        font-size: 13px;
-        line-height: var(--leading-normal);
+        font-size: 0.88rem;
     }
 }
 
