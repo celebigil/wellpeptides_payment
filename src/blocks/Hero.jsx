@@ -5,7 +5,7 @@
 import CtaButton from "./CtaButton.jsx";
 
 export default function Hero({ blockId, data, page }) {
-    const { headline, subheadline, image_url, video_url, bg_color, cta } = data || {};
+    const { headline, subheadline, tagline, image_url, video_url, bg_color, cta } = data || {};
     const style = bg_color ? { backgroundColor: bg_color } : undefined;
     const hasCta = cta && (cta.label || cta.amount || cta.url);
     return (
@@ -33,6 +33,9 @@ export default function Hero({ blockId, data, page }) {
                 {headline ? <h1 className="ep-hero__title">{headline}</h1> : null}
                 {subheadline ? (
                     <p className="ep-hero__subtitle">{subheadline}</p>
+                ) : null}
+                {tagline ? (
+                    <p className="ep-hero__tagline">{tagline}</p>
                 ) : null}
                 {hasCta ? (
                     <div className="ep-hero__cta">

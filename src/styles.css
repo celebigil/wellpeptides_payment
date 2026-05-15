@@ -351,6 +351,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.6);
 }
+.ep-hero__tagline {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: clamp(14px, 1.8vw, 18px);
+    font-weight: var(--font-medium);
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    color: var(--color-brand);
+}
 /* Hero-embedded CTA: tighter margins + flips the reassurance line to
    translucent-white so it stays legible on the dark hero. The pill
    itself reuses the same .ep-cta token (mavi on dark = high contrast). */
