@@ -1,11 +1,12 @@
-// Self-contained "longevity" template — full bespoke layout matching the
-// Miami Social Longevity Center mock. Doesn't go through the blocks
-// renderer; pulls data from page.blocksJson.longevity instead so admins
-// edit one keyed object in BO rather than juggling 4-5 separate blocks.
+// Self-contained "longevity" template — bespoke dark-hero landing with
+// stars + glowing horizon + glowing blue CTA pill, followed by a cream
+// card section. Doesn't go through the blocks renderer; pulls data
+// from page.blocksJson.longevity instead so admins edit one keyed
+// object in BO rather than juggling 4-5 separate blocks.
 //
 // PayPal CTA reuses the same href rules as CtaButton: amount + slug ->
 // `/api/v1/pp/checkout/<slug>?cta=<blockId>`, else page.paypalUrl.
-import logo from "../assets/logo-well-society.svg";
+import { useMemo } from "react";
 import { trackCtaClick } from "../analytics.js";
 
 function buildHref({ blockId, amount, ctaUrl, page }) {
@@ -36,120 +37,160 @@ function formatPrice(amount, currency) {
     }
 }
 
+// SVG library — every icon used by the landing in one place. Tracks the
+// reference HTML 1:1 so the visual stays consistent if either file is
+// updated later. Sizes/strokes are controlled by the wrapping element.
 function I({ name }) {
-    const s = "currentColor";
     switch (name) {
         case "lock":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <rect x="4" y="11" width="16" height="10" rx="2" stroke={s} strokeWidth="1.7"/>
-                    <path d="M8 11V7a4 4 0 018 0v4" stroke={s} strokeWidth="1.7" strokeLinecap="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
             );
         case "shield":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M12 3l8 3v5c0 5-3.4 9.1-8 10-4.6-.9-8-5-8-10V6l8-3z"
-                          stroke={s} strokeWidth="1.6" strokeLinejoin="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
             );
-        case "shield-check":
+        case "card":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M12 3l8 3v5c0 5-3.4 9.1-8 10-4.6-.9-8-5-8-10V6l8-3z"
-                          stroke={s} strokeWidth="1.6" strokeLinejoin="round"/>
-                    <path d="M9 12l2 2 4-4" stroke={s} strokeWidth="1.6"
-                          strokeLinecap="round" strokeLinejoin="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="1" y="4" width="22" height="16" rx="2" />
+                    <line x1="1" y1="10" x2="23" y2="10" />
                 </svg>
             );
-        case "paypal":
+        case "clock":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M7 20l1.3-8.2h3.4c2.7 0 4.5-1.3 4.9-3.8.4-2.4-1-3.8-3.7-3.8H8.2L6 20h1z"
-                          stroke={s} strokeWidth="1.5" strokeLinejoin="round"/>
-                    <path d="M9 16l1-6.4h2.9c1.6 0 2.5-.8 2.7-2.2"
-                          stroke={s} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-            );
-        case "check-circle":
-            return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" stroke={s} strokeWidth="1.6"/>
-                    <path d="M8.5 12.5l2.5 2.5 4.5-5" stroke={s} strokeWidth="1.6"
-                          strokeLinecap="round" strokeLinejoin="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
                 </svg>
             );
         case "sparkle":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"
-                          stroke={s} strokeWidth="1.5" strokeLinejoin="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z" />
                 </svg>
             );
         case "target":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" stroke={s} strokeWidth="1.6"/>
-                    <circle cx="12" cy="12" r="5" stroke={s} strokeWidth="1.6"/>
-                    <circle cx="12" cy="12" r="1.5" fill={s}/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="4" />
+                    <line x1="12" y1="2" x2="12" y2="6" />
+                    <line x1="12" y1="18" x2="12" y2="22" />
+                    <line x1="2" y1="12" x2="6" y2="12" />
+                    <line x1="18" y1="12" x2="22" y2="12" />
                 </svg>
             );
         case "chart":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M4 20h16M7 20V10M12 20V4M17 20v-7"
-                          stroke={s} strokeWidth="1.7" strokeLinecap="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <line x1="18" y1="20" x2="18" y2="10" />
+                    <line x1="12" y1="20" x2="12" y2="4" />
+                    <line x1="6" y1="20" x2="6" y2="14" />
                 </svg>
             );
         case "user":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="8" r="3.5" stroke={s} strokeWidth="1.6"/>
-                    <path d="M4.5 20a7.5 7.5 0 0115 0" stroke={s} strokeWidth="1.6" strokeLinecap="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
                 </svg>
             );
         case "leaf":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 19c5 2 13-2 14-13C8 4 4 12 5 19zM5 19l8-8"
-                          stroke={s} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
                 </svg>
             );
         case "chat":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 6h14v10H9l-4 4V6z" stroke={s} strokeWidth="1.6" strokeLinejoin="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+            );
+        case "shield-check":
+            // Reference uses the same shield silhouette for the "Important
+            // notes" card-header icon AND for the "informational purposes"
+            // row — they're the same SVG. We expose it under both names so
+            // BO content authoring stays explicit.
+            return (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
             );
         case "clipboard":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <rect x="6" y="5" width="12" height="16" rx="2" stroke={s} strokeWidth="1.6"/>
-                    <rect x="9" y="3" width="6" height="4" rx="1" stroke={s} strokeWidth="1.6"/>
-                    <path d="M9 12h6M9 16h4" stroke={s} strokeWidth="1.6" strokeLinecap="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
                 </svg>
             );
         case "globe":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" stroke={s} strokeWidth="1.6"/>
-                    <path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"
-                          stroke={s} strokeWidth="1.6" strokeLinecap="round"/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                 </svg>
             );
         case "age":
             return (
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" stroke={s} strokeWidth="1.6"/>
-                    <path d="M8 14c.7-1.5 2.1-2.5 4-2.5s3.3 1 4 2.5"
-                          stroke={s} strokeWidth="1.6" strokeLinecap="round"/>
-                    <circle cx="9.5" cy="9.5" r="1" fill={s}/>
-                    <circle cx="14.5" cy="9.5" r="1" fill={s}/>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
                 </svg>
             );
         default:
             return null;
     }
+}
+
+// Twinkling stars — generated once on mount and memoised so React
+// doesn't reshuffle the field on re-render. 90 stars matches the
+// reference; a handful are deliberately rendered 2.5px wide for depth.
+function Stars() {
+    const stars = useMemo(() => {
+        const out = [];
+        for (let i = 0; i < 90; i++) {
+            const big = Math.random() > 0.85;
+            const size = big ? 2.5 : 1.5;
+            out.push({
+                top: Math.random() * 85,
+                left: Math.random() * 100,
+                d: 3 + Math.random() * 5,
+                delay: Math.random() * 6,
+                op: 0.3 + Math.random() * 0.6,
+                size,
+            });
+        }
+        return out;
+    }, []);
+    return (
+        <div className="lv-stars" aria-hidden="true">
+            {stars.map((s, i) => (
+                <span
+                    key={i}
+                    className="lv-star"
+                    style={{
+                        top: `${s.top}%`,
+                        left: `${s.left}%`,
+                        width: `${s.size}px`,
+                        height: `${s.size}px`,
+                        "--lv-d": `${s.d}s`,
+                        "--lv-delay": `${s.delay}s`,
+                        "--lv-op": s.op,
+                    }}
+                />
+            ))}
+        </div>
+    );
 }
 
 function FeatureList({ heading, headingIcon, items }) {
@@ -208,20 +249,21 @@ export default function LongevityLanding({ page }) {
 
     return (
         <div className="lv-shell">
-            {/* Hero: dark navy with horizon glow + rounded outline header */}
-            <section className="lv-hero">
-                <div className="lv-hero__glow" aria-hidden="true" />
-                <div className="lv-hero__horizon" aria-hidden="true" />
+            {/* Fixed rounded-pill nav, floats over the hero */}
+            <nav className="lv-nav" aria-label="Site">
+                <a href="https://wellsociety.com" className="lv-nav__brand">
+                    <span className="lv-nav__brand-text">Well Society</span>
+                </a>
+                <span className="lv-nav__badge">
+                    <I name="lock" />
+                    <span>Secure checkout</span>
+                </span>
+            </nav>
 
-                <header className="lv-nav">
-                    <a href="https://wellsociety.com" className="lv-nav__brand" aria-label="Well Society">
-                        <img src={logo} alt="Well Society" className="lv-nav__logo" />
-                    </a>
-                    <span className="lv-nav__badge">
-                        <I name="lock" />
-                        <span>Secure checkout</span>
-                    </span>
-                </header>
+            {/* Hero — stars + horizon glow + content */}
+            <section className="lv-hero">
+                <Stars />
+                <div className="lv-hero__horizon" aria-hidden="true" />
 
                 <div className="lv-hero__content">
                     <p className="lv-hero__eyebrow">{eyebrow}</p>
@@ -247,10 +289,10 @@ export default function LongevityLanding({ page }) {
 
                     <ul className="lv-trust" aria-label="Trust signals">
                         <li><I name="shield" /><span>256-bit SSL</span></li>
-                        <li className="lv-trust__dot" aria-hidden="true">•</li>
-                        <li><I name="paypal" /><span>PayPal Buyer Protection</span></li>
-                        <li className="lv-trust__dot" aria-hidden="true">•</li>
-                        <li><I name="check-circle" /><span>No hidden fees</span></li>
+                        <li className="lv-trust__dot" aria-hidden="true" />
+                        <li><I name="card" /><span>PayPal Buyer Protection</span></li>
+                        <li className="lv-trust__dot" aria-hidden="true" />
+                        <li><I name="clock" /><span>No hidden fees</span></li>
                     </ul>
                 </div>
             </section>

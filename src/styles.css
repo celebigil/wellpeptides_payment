@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap');
 @import './tokens.css';
 
 /* ── Aeonik Pro (mirrors new_wel @font-face declarations) ─────────── */
@@ -1161,211 +1161,283 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 /* ── Template: longevity (Social Longevity Center) ────────────────────
-   Bespoke dark-hero landing with horizon glow + glowing CTA + two
-   glass cards. Lives outside .ep-page (the cream-tinted block column)
-   so the hero can run full-bleed and the cards live on their own
-   surface. All selectors prefixed `lv-` to avoid collision with the
-   block-based `ep-` system. */
+   Bespoke dark-hero landing — full-bleed dark hero with stars + glowing
+   horizon line + glowing CTA, then a light-cream card section below
+   joined by a vertical gradient. All selectors prefixed `lv-` to avoid
+   collision with the block-based `ep-` system. */
 
 .lv-shell {
-    background: #fafaf7;
+    /* Tokens scoped to the longevity template so the rest of the SPA
+       (wrapped/bare landings) keeps the Aeonik-driven palette intact. */
+    --lv-dark-bg: #060b17;
+    --lv-dark-mid: #0b1425;
+    --lv-accent-blue: #3a5af9;
+    --lv-accent-glow: #4d6aff;
+    --lv-text-primary: #f0f4ff;
+    --lv-text-muted: #8a97b8;
+    --lv-light-bg: #f5f3ef;
+    --lv-card-bg: #ffffff;
+    --lv-card-border: #e8e4de;
+    --lv-icon-color: #3a5af9;
+    --lv-font-sans: 'DM Sans', 'Aeonik Pro', 'Inter', sans-serif;
+    --lv-font-display: 'Cormorant Garamond', Georgia, serif;
+
+    background: var(--lv-dark-bg);
+    color: var(--lv-text-primary);
+    font-family: var(--lv-font-sans);
     min-height: 100vh;
-    color: #0c111d;
-    font-family: var(--font-sans);
+    overflow-x: hidden;
 }
 
-/* Hero — deep navy with a soft blue horizon glow and a subtle vignette.
-   We use radial gradients instead of an image so the look survives
-   without any external assets. */
-.lv-hero {
-    position: relative;
-    overflow: hidden;
-    padding: 28px 24px 0;
-    background:
-        radial-gradient(ellipse 120% 80% at 50% 105%, rgba(86, 135, 255, 0.32) 0%, transparent 55%),
-        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(86, 135, 255, 0.06) 0%, transparent 60%),
-        linear-gradient(180deg, #04060d 0%, #060a17 60%, #07101f 100%);
-    color: #fff;
-}
-/* The crisp blue horizon line + light bloom right where the curve sits */
-.lv-hero__horizon {
-    position: absolute;
-    left: -10%;
-    right: -10%;
-    bottom: -240px;
-    height: 480px;
-    border-radius: 50%;
-    background:
-        radial-gradient(ellipse 50% 30% at 50% 12%, rgba(120, 165, 255, 0.55) 0%, transparent 70%),
-        radial-gradient(ellipse 70% 50% at 50% 10%, rgba(60, 120, 255, 0.25) 0%, transparent 75%);
-    filter: blur(2px);
-    pointer-events: none;
-    z-index: 0;
-}
-.lv-hero__glow {
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 50% 100%, rgba(100, 150, 255, 0.18) 0%, transparent 40%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Rounded outline navigation bar */
+/* ── NAV — fixed rounded pill at the top */
 .lv-nav {
-    position: relative;
-    z-index: 2;
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 14px 28px;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 1200px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    padding: 14px 28px;
+    background: rgba(10, 18, 35, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50px;
+    z-index: 100;
+    animation: lv-fadeDown 0.7s ease both;
 }
 .lv-nav__brand {
     display: inline-flex;
     align-items: center;
+    font-family: var(--lv-font-display);
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--lv-text-primary);
 }
 .lv-nav__brand:hover { opacity: 0.85; }
 .lv-nav__logo {
-    height: 22px;
-    width: auto;
-    /* The Well Society SVG is dark by default — invert + warm-shift so
-       it reads as bright cream on the dark hero without shipping a
-       second asset. */
-    filter: invert(1) brightness(1.1);
+    /* The brand SVG is dark by default; we hide it and render a serif
+       wordmark instead to match the reference. Keeping the import for
+       fallback in case admins want the bitmap logo back. */
+    display: none;
+}
+.lv-nav__brand-text {
+    font-family: var(--lv-font-display);
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--lv-text-primary);
 }
 .lv-nav__badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.78);
-    white-space: nowrap;
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--lv-text-muted);
 }
 .lv-nav__badge svg {
     width: 14px;
     height: 14px;
+    opacity: 0.7;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
 }
 
-/* Hero content column */
-.lv-hero__content {
+/* ── HERO — full-viewport deep space backdrop */
+.lv-hero {
     position: relative;
-    z-index: 2;
-    max-width: 880px;
-    margin: 0 auto;
-    padding: 64px 16px 96px;
-    text-align: center;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    justify-content: center;
+    text-align: center;
+    padding: 160px 24px 120px;
+    overflow: hidden;
+    background: var(--lv-dark-bg);
 }
-.lv-hero__eyebrow {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.78);
+.lv-hero::before {
+    /* Layered radial gradients — the "deep space" backdrop */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 55% at 50% 60%, rgba(30, 55, 160, 0.45) 0%, transparent 70%),
+        radial-gradient(ellipse 120% 40% at 50% 100%, rgba(15, 35, 120, 0.6) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 30% at 30% 20%, rgba(10, 25, 80, 0.3) 0%, transparent 60%);
+    pointer-events: none;
 }
-.lv-hero__title {
-    margin: 0;
-    font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
-    font-weight: 400;
-    color: #fff;
-    font-size: clamp(40px, 7vw, 84px);
-    line-height: 1.02;
-    letter-spacing: -0.01em;
+
+/* Horizon glow — thin blue band 15% from the bottom */
+.lv-hero__horizon {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    max-width: 95%;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(80, 120, 255, 0.15) 20%,
+        rgba(100, 150, 255, 0.6) 45%,
+        rgba(150, 180, 255, 0.8) 50%,
+        rgba(100, 150, 255, 0.6) 55%,
+        rgba(80, 120, 255, 0.15) 80%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    filter: blur(2px);
+    pointer-events: none;
+    z-index: 1;
+}
+.lv-hero__horizon::after {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    max-width: 90%;
+    height: 40px;
+    background: radial-gradient(ellipse at center, rgba(120, 160, 255, 0.25) 0%, transparent 70%);
+    filter: blur(8px);
+}
+
+/* Stars container + individual twinkling stars */
+.lv-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.lv-star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: lv-twinkle var(--lv-d, 4s) var(--lv-delay, 0s) infinite ease-in-out;
+}
+@keyframes lv-twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: var(--lv-op, 0.6); }
+}
+
+/* Hero content stack */
+.lv-hero__content {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
-    gap: 0;
+    align-items: center;
+    max-width: 880px;
+    width: 100%;
+}
+.lv-hero__eyebrow {
+    font-family: var(--lv-font-sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lv-text-muted);
+    margin: 0 0 24px;
+    animation: lv-fadeUp 0.9s 0.2s ease both;
+}
+.lv-hero__title {
+    margin: 0 0 28px;
+    font-family: var(--lv-font-display);
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--lv-text-primary);
+    animation: lv-fadeUp 0.9s 0.35s ease both;
 }
 .lv-hero__title span { display: block; }
 .lv-hero__subtitle {
-    margin: 4px 0 8px;
-    max-width: 640px;
-    font-size: clamp(15px, 1.6vw, 17px);
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.72);
+    margin: 0 0 48px;
+    max-width: 560px;
+    font-family: var(--lv-font-sans);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--lv-text-muted);
+    animation: lv-fadeUp 0.9s 0.5s ease both;
 }
 
-/* The glowing primary CTA — pill with a brand-blue interior, white text,
-   strong outer bloom and a brighter top "spark" so it really pops on
-   the dark hero. */
+/* ── CTA — gradient blue pill with blue glow */
 .lv-cta {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    padding: 18px 42px;
-    border-radius: 999px;
+    padding: 18px 44px;
+    background: linear-gradient(135deg, #2a4de8 0%, #3a5af9 50%, #5070ff 100%);
     color: #fff;
-    font-size: 17px;
+    font-family: var(--lv-font-sans);
+    font-size: 1.05rem;
     font-weight: 500;
-    letter-spacing: -0.005em;
-    background: linear-gradient(180deg, #4366ff 0%, #2c44e6 100%);
-    box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.18) inset,
-        0 1px 0 rgba(255, 255, 255, 0.35) inset,
-        0 -8px 24px rgba(20, 30, 90, 0.45) inset,
-        0 18px 50px rgba(60, 100, 255, 0.55),
-        0 4px 14px rgba(40, 80, 240, 0.45);
-    transition: transform 150ms ease, box-shadow 150ms ease;
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    overflow: hidden;
     text-decoration: none;
-    min-width: 280px;
-    margin-top: 8px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow:
+        0 0 40px rgba(60, 90, 255, 0.4),
+        0 8px 30px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    animation: lv-fadeUp 0.9s 0.65s ease both;
 }
 .lv-cta::before {
-    /* Bright spark above the button — matches the mock's pinpoint glow */
     content: "";
     position: absolute;
-    top: -2px;
-    left: 50%;
-    width: 60%;
-    height: 8px;
-    transform: translateX(-50%);
-    background: radial-gradient(ellipse at center, rgba(180, 210, 255, 0.95) 0%, transparent 70%);
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
     pointer-events: none;
 }
 .lv-cta:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px) scale(1.015);
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.22) inset,
-        0 1px 0 rgba(255, 255, 255, 0.4) inset,
-        0 -8px 24px rgba(20, 30, 90, 0.45) inset,
-        0 22px 60px rgba(70, 120, 255, 0.6),
-        0 6px 18px rgba(40, 80, 240, 0.5);
+        0 0 60px rgba(70, 100, 255, 0.55),
+        0 14px 40px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
     opacity: 1;
 }
+.lv-cta:active { transform: translateY(0) scale(0.99); }
 .lv-cta__icon svg {
     width: 18px;
     height: 18px;
+    opacity: 0.9;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.2;
 }
 .lv-cta__label { white-space: nowrap; }
-.lv-cta__price {
-    font-weight: 500;
-    opacity: 0.96;
-}
+.lv-cta__price { font-weight: 500; opacity: 0.96; }
 
+/* ── Trust bar — dots between items */
 .lv-trust {
     list-style: none;
-    margin: 4px 0 0;
+    margin: 22px 0 0;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
-    gap: 12px 14px;
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 13px;
+    gap: 20px;
+    font-size: 0.78rem;
+    color: var(--lv-text-muted);
+    animation: lv-fadeUp 0.9s 0.8s ease both;
 }
 .lv-trust li {
     display: inline-flex;
@@ -1375,78 +1447,82 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .lv-trust li svg {
     width: 14px;
     height: 14px;
+    flex-shrink: 0;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
 }
 .lv-trust__dot {
-    color: rgba(255, 255, 255, 0.32);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--lv-text-muted);
+    opacity: 0.4;
 }
 
-/* Cards section — cream "tongue" lifting UP into the dark hero. The
-   tongue spans the full width but its top corners use a tall elliptical
-   border-radius so they dip down sharply at the left/right edges. The
-   dark hero shows through above those dipped corners, reading as
-   "kulakçık" (ear flaps) flanking the curved cream top. */
+/* ── CARDS section — cream surface with a soft gradient seam at the top */
 .lv-cards {
     position: relative;
-    z-index: 2;
-    margin-top: -80px;
-    padding: 100px 24px 80px;
-    background: #fafaf7;
-    /* Horizontal radius is small enough that the two corner curves stay
-       distinct (instead of merging into one flat arc across the width)
-       — that's what creates the visible dipping/ear shape on the sides.
-       Vertical radius is larger so the curve has real height. */
-    border-top-left-radius: 120px 80px;
-    border-top-right-radius: 120px 80px;
+    background: var(--lv-light-bg);
+    padding: 80px 24px 100px;
+    color: #3a4060;
+}
+.lv-cards::before {
+    /* Vertical gradient seam — 60px tall, blends from dark-bg into
+       light-bg so the hero/cards transition reads as a smooth horizon
+       rather than a hard line. */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--lv-dark-bg) 0%, var(--lv-light-bg) 100%);
+    pointer-events: none;
 }
 .lv-cards__grid {
-    max-width: 1240px;
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr 1fr;
     gap: 24px;
 }
 
 .lv-card {
-    position: relative;
-    padding: 28px 32px;
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(20, 30, 70, 0.06);
-    box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.8) inset,
-        0 10px 30px rgba(20, 30, 80, 0.06);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: var(--lv-card-bg);
+    border: 1px solid var(--lv-card-border);
+    border-radius: 20px;
+    padding: 36px 36px 40px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
 }
 .lv-card__header {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding-bottom: 18px;
-    margin-bottom: 6px;
-    border-bottom: 1px solid rgba(20, 30, 70, 0.06);
+    margin-bottom: 28px;
 }
 .lv-card__icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: rgba(67, 102, 255, 0.08);
-    color: #2c44e6;
+    color: var(--lv-icon-color);
 }
 .lv-card__icon svg {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
 }
 .lv-card__heading {
     margin: 0;
-    font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
-    font-weight: 400;
-    font-size: 26px;
+    font-family: var(--lv-font-display);
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: #1a2035;
     letter-spacing: -0.005em;
-    color: #0c111d;
 }
 .lv-card__list {
     list-style: none;
@@ -1454,77 +1530,63 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     padding: 0;
     display: flex;
     flex-direction: column;
+    gap: 18px;
 }
 .lv-card__row {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(20, 30, 70, 0.05);
-}
-.lv-card__row:last-child {
-    border-bottom: none;
-    padding-bottom: 4px;
+    gap: 14px;
+    color: #3a4060;
+    font-family: var(--lv-font-sans);
+    font-size: 0.93rem;
+    font-weight: 400;
+    line-height: 1.5;
 }
 .lv-card__row-icon {
-    flex: 0 0 22px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #4366ff;
-    margin-top: 2px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--lv-icon-color);
+    opacity: 0.75;
 }
 .lv-card__row-icon svg {
     width: 18px;
     height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
 }
 .lv-card__row-text {
     flex: 1;
-    font-size: 14.5px;
-    line-height: 1.55;
-    color: #344054;
 }
 
-/* ── Longevity: responsive ───────────────────────────────────────── */
-
-@media (max-width: 900px) {
-    .lv-cards__grid {
-        grid-template-columns: 1fr;
-    }
-    .lv-cards {
-        margin-top: -60px;
-        padding: 80px 24px 80px;
-        border-top-left-radius: 80px 60px;
-        border-top-right-radius: 80px 60px;
-    }
+/* ── Animations */
+@keyframes lv-fadeDown {
+    from { opacity: 0; transform: translateX(-50%) translateY(-16px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes lv-fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 640px) {
-    .lv-hero { padding: 16px 14px 0; }
-    .lv-nav { padding: 12px 18px; }
-    .lv-nav__logo { height: 18px; }
-    .lv-nav__badge { font-size: 12px; }
-    .lv-hero__content {
-        padding: 44px 4px 72px;
-        gap: 20px;
+/* ── Responsive */
+@media (max-width: 720px) {
+    .lv-nav {
+        width: calc(100% - 24px);
+        padding: 12px 20px;
+        top: 12px;
     }
-    .lv-hero__eyebrow { font-size: 11px; letter-spacing: 0.18em; }
-    .lv-hero__subtitle { font-size: 14.5px; }
-    .lv-cta {
-        min-width: 0;
-        width: 100%;
-        padding: 16px 24px;
-        font-size: 15.5px;
+    .lv-cards__grid { grid-template-columns: 1fr; }
+    .lv-hero { padding: 140px 18px 100px; }
+    .lv-hero__title { font-size: clamp(2.8rem, 12vw, 4rem); }
+    .lv-trust {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
     }
-    .lv-trust { font-size: 12px; gap: 8px 10px; }
-    .lv-cards {
-        margin: -50px 16px 0;
-        padding: 70px 14px 60px;
-        border-top-left-radius: 50% 50px;
-        border-top-right-radius: 50% 50px;
-    }
-    .lv-card { padding: 22px 22px; border-radius: 16px; }
-    .lv-card__heading { font-size: 22px; }
-    .lv-card__row { padding: 12px 0; }
-    .lv-card__row-text { font-size: 14px; }
+    .lv-trust__dot { display: none; }
+    .lv-cta { padding: 16px 28px; font-size: 0.98rem; }
+    .lv-card { padding: 28px 24px 32px; }
+    .lv-card__heading { font-size: 1.3rem; }
+    .lv-cards { padding: 60px 18px 80px; }
 }
