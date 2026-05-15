@@ -1,4 +1,4 @@
-import logo from "../assets/logo-well_peptides.png";
+import logo from "../assets/logo-well-society.svg";
 
 // Visually mirrors the new_wel storefront header — same height, blurred
 // translucent backdrop, same logo sizing. Intentionally strips the nav,
@@ -8,8 +8,8 @@ export default function SiteHeader() {
     return (
         <header className="ep-site-header">
             <div className="ep-site-header__inner">
-                <a href="https://wellpeptides.com" className="ep-site-header__brand">
-                    <img src={logo} alt="Well Peptides" className="ep-site-header__logo" />
+                <a href="https://wellsociety.com" className="ep-site-header__brand">
+                    <img src={logo} alt="Well Society" className="ep-site-header__logo" />
                 </a>
                 <span className="ep-site-header__badge">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">

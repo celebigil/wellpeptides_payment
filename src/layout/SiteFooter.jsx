@@ -1,7 +1,7 @@
-import logo from "../assets/logo-well_peptides.png";
+import logo from "../assets/logo-well-society.svg";
 
 const DISCLAIMER =
-    "Well Peptides products are research compounds intended for laboratory and research use only. Not intended for human or veterinary diagnosis or treatment.";
+    "Well Society products are research compounds intended for laboratory and research use only. Not intended for human or veterinary diagnosis or treatment.";
 
 // Mirrors the storefront footer's gray surface and bottom-bar layout
 // without the full 6-column nav grid — those links would compete with
@@ -13,8 +13,8 @@ export default function SiteFooter() {
             <div className="ep-site-footer__inner">
                 <p className="ep-site-footer__disclaimer">{DISCLAIMER}</p>
                 <div className="ep-site-footer__bottom">
-                    <a href="https://wellpeptides.com" aria-label="Well Peptides home">
-                        <img src={logo} alt="Well Peptides" className="ep-site-footer__logo" />
+                    <a href="https://wellsociety.com" aria-label="Well Society home">
+                        <img src={logo} alt="Well Society" className="ep-site-footer__logo" />
                     </a>
                     <div className="ep-site-footer__badges">
                         <span className="ep-trust-pill">
@@ -46,7 +46,7 @@ export default function SiteFooter() {
                         </span>
                     </div>
                     <span className="ep-site-footer__copyright">
-                        © {year} Well Peptides
+                        © {year} Well Society
                     </span>
                 </div>
             </div>
