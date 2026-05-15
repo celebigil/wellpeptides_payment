@@ -1,49 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+/* Google Fonts fallbacks for the brand stack defined in tokens.css.
+   Matiere Condensed → Oswald (geometric condensed display)
+   DIN               → Saira (industrial sans-serif)
+   FT Regola Neue    → Inter (humanist neogrotesque)
+   Cormorant retained for any leftover serif usage; will be removed
+   once we confirm no block renderer references it. */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Saira:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
 @import './tokens.css';
 
-/* ── Aeonik Pro (mirrors new_wel @font-face declarations) ─────────── */
-
-@font-face {
-    font-family: 'Aeonik Pro';
-    src: url('./assets/fonts/Aeonik Pro TRIAL Light/Web Fonts/081a86aab4f4d8f1ec6e058603847f1e.woff2') format('woff2'),
-         url('./assets/fonts/Aeonik Pro TRIAL Light/Web Fonts/081a86aab4f4d8f1ec6e058603847f1e.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Aeonik Pro';
-    src: url('./assets/fonts/Aeonik Pro TRIAL/Aeonik Pro TRIAL.woff2') format('woff2'),
-         url('./assets/fonts/Aeonik Pro TRIAL/Aeonik Pro TRIAL.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Aeonik Fono';
-    src: url('./assets/fonts/Aeonik_Fono/AeonikFono-Light.otf') format('opentype');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Aeonik Fono';
-    src: url('./assets/fonts/Aeonik_Fono/AeonikFono-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Aeonik Fono';
-    src: url('./assets/fonts/Aeonik_Fono/AeonikFono-Medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
+/* Brand font files (Matiere Condensed / DIN / FT Regola Neue) are not
+   bundled yet — drop the .woff2/.otf files under assets/fonts/ and add
+   @font-face declarations here once they're available. Until then, the
+   Google Fonts fallbacks loaded above (Oswald/Saira/Inter) render. */
 
 /* ── Base ─────────────────────────────────────────────────────────── */
 

@@ -26,9 +26,22 @@
     --color-gray-800: #1D2939;
     --color-gray-900: #101828;
 
-    --font-sans: 'Aeonik Pro', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-    --font-serif: 'Aeonik Fono', 'Georgia', sans-serif;
-    --font-display: 'Cormorant Garamond', 'Georgia', serif;
+    /* ── Brand font stack ─────────────────────────────────────────────
+       Primary names match the brand's purchased families. When their
+       @font-face files aren't bundled, the listed Google Fonts (loaded
+       in styles.css) take over so layout stays close to the intended
+       look. Drop a font file under assets/fonts/ + add @font-face to
+       upgrade automatically — no other code needs to change. */
+    --ff-condensed: 'Matiere Condensed', 'Oswald', 'Helvetica Neue', Arial, sans-serif;
+    --ff-din:       'DIN', 'Saira', 'Helvetica Neue', Arial, sans-serif;
+    --ff-body:      'FT Regola Neue', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+    /* Legacy aliases kept so unmigrated components don't break — these
+       now resolve through the brand stack above. New code should use
+       --ff-condensed / --ff-din / --ff-body directly. */
+    --font-sans: var(--ff-body);
+    --font-serif: var(--ff-body);
+    --font-display: var(--ff-condensed);
 
     --text-xs: 0.75rem;
     --text-sm: 0.875rem;
