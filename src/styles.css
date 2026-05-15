@@ -1180,11 +1180,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .lv-hero {
     position: relative;
     overflow: hidden;
-    /* Insets so the cream lv-shell shows through as "ears" on the
-       top/left/right edges and the rounded corners read as a card
-       floating above the page surface. */
-    margin: 16px 18px 0;
-    border-radius: 36px;
     padding: 28px 24px 0;
     background:
         radial-gradient(ellipse 120% 80% at 50% 105%, rgba(86, 135, 255, 0.32) 0%, transparent 55%),
@@ -1385,16 +1380,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: rgba(255, 255, 255, 0.32);
 }
 
-/* Cards section — sits on a warm off-white surface that visually
-   "lifts" from the hero. Cards use a subtle frosted/cream treatment. */
+/* Cards section — cream "tongue" lifting UP into the dark hero. The
+   tongue spans the full width but its top corners use a tall elliptical
+   border-radius so they dip down sharply at the left/right edges. The
+   dark hero shows through above those dipped corners, reading as
+   "kulakçık" (ear flaps) flanking the curved cream top. */
 .lv-cards {
     position: relative;
-    z-index: 1;
-    /* Cards sit cleanly under the hero on the cream surface — used to
-       overlap into the hero's bottom curve with margin-top:-140px but
-       the dark band reading through the card backdrop looked muddy. */
-    margin-top: 48px;
-    padding: 0 24px 80px;
+    z-index: 2;
+    margin-top: -80px;
+    padding: 100px 24px 80px;
+    background: #fafaf7;
+    /* Horizontal radius is small enough that the two corner curves stay
+       distinct (instead of merging into one flat arc across the width)
+       — that's what creates the visible dipping/ear shape on the sides.
+       Vertical radius is larger so the curve has real height. */
+    border-top-left-radius: 120px 80px;
+    border-top-right-radius: 120px 80px;
 }
 .lv-cards__grid {
     max-width: 1240px;
@@ -1489,15 +1491,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     .lv-cards__grid {
         grid-template-columns: 1fr;
     }
-    .lv-cards { margin-top: 32px; }
+    .lv-cards {
+        margin-top: -60px;
+        padding: 80px 24px 80px;
+        border-top-left-radius: 80px 60px;
+        border-top-right-radius: 80px 60px;
+    }
 }
 
 @media (max-width: 640px) {
-    .lv-hero {
-        margin: 10px 10px 0;
-        border-radius: 22px;
-        padding: 16px 14px 0;
-    }
+    .lv-hero { padding: 16px 14px 0; }
     .lv-nav { padding: 12px 18px; }
     .lv-nav__logo { height: 18px; }
     .lv-nav__badge { font-size: 12px; }
@@ -1514,7 +1517,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         font-size: 15.5px;
     }
     .lv-trust { font-size: 12px; gap: 8px 10px; }
-    .lv-cards { padding: 0 14px 60px; }
+    .lv-cards {
+        margin: -50px 16px 0;
+        padding: 70px 14px 60px;
+        border-top-left-radius: 50% 50px;
+        border-top-right-radius: 50% 50px;
+    }
     .lv-card { padding: 22px 22px; border-radius: 16px; }
     .lv-card__heading { font-size: 22px; }
     .lv-card__row { padding: 12px 0; }
