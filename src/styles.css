@@ -288,17 +288,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     left: 50%;
     margin-left: -50vw;
     width: 100vw;
-    min-height: 70svh;
+    min-height: 48svh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: var(--space-16) var(--space-5) calc(var(--space-16) + 60px);
+    /* Tight top/bottom — keeps the dramatic dark moment without
+       pushing the CTA below the first scroll on mobile. */
+    padding: var(--space-10) var(--space-5) calc(var(--space-10) + 28px);
     background-color: #000;
     color: var(--color-white);
     overflow: hidden;
-    margin-bottom: var(--space-12);
+    margin-bottom: var(--space-10);
 }
 .ep-hero__media {
     position: absolute;
@@ -350,7 +352,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .ep-hero__scroll-hint {
     position: absolute;
-    bottom: 32px;
+    bottom: 16px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
@@ -369,10 +371,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 @media (min-width: 768px) {
     .ep-hero {
-        min-height: 78svh;
-        padding: var(--space-20) var(--space-10) calc(var(--space-20) + 60px);
+        min-height: 56svh;
+        padding: var(--space-12) var(--space-10) calc(var(--space-12) + 32px);
     }
-    .ep-hero__content { max-width: 800px; gap: var(--space-8); }
+    .ep-hero__content { max-width: 800px; gap: var(--space-6); }
     .ep-hero__title { font-size: clamp(48px, 7vw, 80px); }
 }
 
