@@ -327,9 +327,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     z-index: 1;
     width: 100%;
     max-width: 720px;
-    text-align: left;
+    text-align: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: var(--space-6);
 }
 .ep-hero__title {
@@ -357,13 +358,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     margin-top: var(--space-2);
 }
 .ep-hero__cta .ep-cta__wrap {
-    align-items: flex-start;
+    align-items: center;
     margin: 0;
     gap: var(--space-3);
 }
 .ep-hero__cta .ep-cta__reassurance {
     color: rgba(255, 255, 255, 0.6);
-    justify-content: flex-start;
+    justify-content: center;
 }
 .ep-hero__cta .ep-cta__reassurance-dot {
     color: rgba(255, 255, 255, 0.25);
