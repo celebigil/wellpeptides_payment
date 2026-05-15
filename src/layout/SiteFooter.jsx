@@ -6,7 +6,11 @@ import logo from "../assets/logo-well-society.svg";
 // is intentionally heavier than the storefront's funnel-protecting
 // minimal footer.
 
-const STOREFRONT_ORIGIN = "https://wellpeptides.com";
+// Landing brand is Well Society — kept distinct from the storefront's
+// `wellpeptides.com` so Instagram visitors never see two competing
+// names. All buyer-facing strings and links point at wellsociety.com.
+const STOREFRONT_ORIGIN = "https://wellsociety.com";
+const SUPPORT_EMAIL = "support@wellsociety.com";
 
 const DISCLAIMER =
     "Well Society products are research compounds intended for laboratory and research use only. Not for human or veterinary diagnosis, prevention, or treatment.";
@@ -78,9 +82,7 @@ export default function SiteFooter() {
                                 </a>
                             </li>
                             <li>
-                                <a href="mailto:support@wellpeptides.com">
-                                    support@wellpeptides.com
-                                </a>
+                                <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
                             </li>
                         </ul>
                     </div>
@@ -132,7 +134,7 @@ export default function SiteFooter() {
                         © {year} Well Society. All rights reserved.
                     </span>
                     <span className="ep-site-footer__address">
-                        Operated by Well Peptides · support@wellpeptides.com
+                        Operated by Well Society · {SUPPORT_EMAIL}
                     </span>
                 </div>
             </div>
