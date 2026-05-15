@@ -15,45 +15,41 @@
         window.__PAGE_DATA__ = {
             id: 1,
             slug: null,
-            title: "Dev Landing",
-            ogTitle: "Premium Research Peptides",
-            ogDescription: "Trusted by 5,000+ researchers.",
+            title: "Miami's First Social Longevity Center",
+            ogTitle: "Miami's First Social Longevity Center",
+            ogDescription: "A comprehensive, science-driven longevity assessment.",
             ogImageUrl: null,
             paypalUrl: "https://www.paypal.com/checkoutnow?token=DEMO",
             isDefault: true,
             isActive: true,
-            template: "wrapped",
+            template: "longevity",
             blocksJson: {
-                blocks: [
-                    {
-                        id: "h1",
-                        type: "hero",
-                        data: {
-                            headline: "Premium Research Peptides",
-                            subheadline: "Pharmaceutical-grade, third-party tested.",
-                            image_url: "",
-                            bg_color: "#f4f1ea"
-                        }
-                    },
-                    {
-                        id: "t1",
-                        type: "text",
-                        data: { html: "<p>Trusted by <strong>5,000+</strong> researchers worldwide.</p>" }
-                    },
-                    {
-                        id: "l1",
-                        type: "list",
-                        data: {
-                            style: "checkmarks",
-                            items: ["Free shipping over $200", "Discreet packaging", "Lab-tested purity"]
-                        }
-                    },
-                    {
-                        id: "c1",
-                        type: "cta",
-                        data: { label: "Continue to Secure Checkout", url: null, style: "primary" }
-                    }
-                ]
+                longevity: {
+                    eyebrow: "Longevity Assessment",
+                    headlineTop: "Miami's First",
+                    headlineBottom: "Social Longevity Center",
+                    subheadline: "A comprehensive, science-driven assessment that uncovers your biological age and informs a personalized longevity program designed for you.",
+                    amount: "200.00",
+                    currency: "USD",
+                    ctaLabel: "Complete Secure Payment",
+                    blockId: "longevity_cta",
+                    includesHeading: "Your assessment includes",
+                    includes: [
+                        { icon: "target", text: "Comprehensive biomarker & health analysis" },
+                        { icon: "chart", text: "Biological age calculation & risk insights" },
+                        { icon: "user", text: "Personalized longevity program roadmap" },
+                        { icon: "leaf", text: "Lifestyle, nutrition & recovery recommendations" },
+                        { icon: "chat", text: "Expert review & results consultation" }
+                    ],
+                    notesHeading: "Important notes",
+                    notes: [
+                        { icon: "shield-check", text: "This assessment is for informational purposes and not a substitute for medical advice." },
+                        { icon: "clipboard", text: "A licensed clinician will review your results." },
+                        { icon: "lock", text: "Your data is encrypted and never shared without your consent." },
+                        { icon: "globe", text: "Services are provided in compliance with applicable laws and regulations." },
+                        { icon: "age", text: "You must be 18 years or older to purchase." }
+                    ]
+                }
             }
         };
     </script>

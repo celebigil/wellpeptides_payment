@@ -14,6 +14,7 @@ import Faq from "./blocks/Faq.jsx";
 import FeatureCards from "./blocks/FeatureCards.jsx";
 import SiteHeader from "./layout/SiteHeader.jsx";
 import SiteFooter from "./layout/SiteFooter.jsx";
+import LongevityLanding from "./layout/LongevityLanding.jsx";
 // TrustStrip is now rendered INSIDE the Hero block (see blocks/Hero.jsx).
 // Landings without a hero won't show one — which is the correct trade-off
 // since trust strip without brand context above is just visual noise.
@@ -96,6 +97,18 @@ export default function App({ page }) {
                 <PaypalResultBanner result={ppResult} />
                 <Blocks blocks={blocks} page={page} />
             </main>
+        );
+    }
+
+    if (template === "longevity") {
+        // Bespoke dark-hero landing — no SiteHeader/SiteFooter, no Blocks
+        // renderer. LongevityLanding owns its own nav, footer-less layout
+        // and reads content from page.blocksJson.longevity.
+        return (
+            <>
+                <PaypalResultBanner result={ppResult} />
+                <LongevityLanding page={page} />
+            </>
         );
     }
 

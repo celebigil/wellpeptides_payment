@@ -1159,3 +1159,352 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     .ep-steps { font-size: 10px; }
     .ep-order-summary__total-value { font-size: 18px; }
 }
+
+/* ── Template: longevity (Social Longevity Center) ────────────────────
+   Bespoke dark-hero landing with horizon glow + glowing CTA + two
+   glass cards. Lives outside .ep-page (the cream-tinted block column)
+   so the hero can run full-bleed and the cards live on their own
+   surface. All selectors prefixed `lv-` to avoid collision with the
+   block-based `ep-` system. */
+
+.lv-shell {
+    background: #fafaf7;
+    min-height: 100vh;
+    color: #0c111d;
+    font-family: var(--font-sans);
+}
+
+/* Hero — deep navy with a soft blue horizon glow and a subtle vignette.
+   We use radial gradients instead of an image so the look survives
+   without any external assets. */
+.lv-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 28px 24px 0;
+    background:
+        radial-gradient(ellipse 120% 80% at 50% 105%, rgba(86, 135, 255, 0.32) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(86, 135, 255, 0.06) 0%, transparent 60%),
+        linear-gradient(180deg, #04060d 0%, #060a17 60%, #07101f 100%);
+    color: #fff;
+}
+/* The crisp blue horizon line + light bloom right where the curve sits */
+.lv-hero__horizon {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    bottom: -240px;
+    height: 480px;
+    border-radius: 50%;
+    background:
+        radial-gradient(ellipse 50% 30% at 50% 12%, rgba(120, 165, 255, 0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 50% at 50% 10%, rgba(60, 120, 255, 0.25) 0%, transparent 75%);
+    filter: blur(2px);
+    pointer-events: none;
+    z-index: 0;
+}
+.lv-hero__glow {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 100%, rgba(100, 150, 255, 0.18) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Rounded outline navigation bar */
+.lv-nav {
+    position: relative;
+    z-index: 2;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.lv-nav__brand {
+    display: inline-flex;
+    align-items: center;
+}
+.lv-nav__brand:hover { opacity: 0.85; }
+.lv-nav__logo {
+    height: 22px;
+    width: auto;
+    /* The Well Society SVG is dark by default — invert + warm-shift so
+       it reads as bright cream on the dark hero without shipping a
+       second asset. */
+    filter: invert(1) brightness(1.1);
+}
+.lv-nav__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.78);
+    white-space: nowrap;
+}
+.lv-nav__badge svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Hero content column */
+.lv-hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 64px 16px 200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+.lv-hero__eyebrow {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.78);
+}
+.lv-hero__title {
+    margin: 0;
+    font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    color: #fff;
+    font-size: clamp(40px, 7vw, 84px);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.lv-hero__title span { display: block; }
+.lv-hero__subtitle {
+    margin: 4px 0 8px;
+    max-width: 640px;
+    font-size: clamp(15px, 1.6vw, 17px);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+/* The glowing primary CTA — pill with a brand-blue interior, white text,
+   strong outer bloom and a brighter top "spark" so it really pops on
+   the dark hero. */
+.lv-cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 18px 42px;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    background: linear-gradient(180deg, #4366ff 0%, #2c44e6 100%);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+        0 1px 0 rgba(255, 255, 255, 0.35) inset,
+        0 -8px 24px rgba(20, 30, 90, 0.45) inset,
+        0 18px 50px rgba(60, 100, 255, 0.55),
+        0 4px 14px rgba(40, 80, 240, 0.45);
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    text-decoration: none;
+    min-width: 280px;
+    margin-top: 8px;
+}
+.lv-cta::before {
+    /* Bright spark above the button — matches the mock's pinpoint glow */
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    width: 60%;
+    height: 8px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(180, 210, 255, 0.95) 0%, transparent 70%);
+    pointer-events: none;
+}
+.lv-cta:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.22) inset,
+        0 1px 0 rgba(255, 255, 255, 0.4) inset,
+        0 -8px 24px rgba(20, 30, 90, 0.45) inset,
+        0 22px 60px rgba(70, 120, 255, 0.6),
+        0 6px 18px rgba(40, 80, 240, 0.5);
+    opacity: 1;
+}
+.lv-cta__icon svg {
+    width: 18px;
+    height: 18px;
+}
+.lv-cta__label { white-space: nowrap; }
+.lv-cta__price {
+    font-weight: 500;
+    opacity: 0.96;
+}
+
+.lv-trust {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px 14px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
+}
+.lv-trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.lv-trust li svg {
+    width: 14px;
+    height: 14px;
+}
+.lv-trust__dot {
+    color: rgba(255, 255, 255, 0.32);
+}
+
+/* Cards section — sits on a warm off-white surface that visually
+   "lifts" from the hero. Cards use a subtle frosted/cream treatment. */
+.lv-cards {
+    position: relative;
+    z-index: 1;
+    margin-top: -140px; /* overlap into the hero's bottom curve */
+    padding: 0 24px 80px;
+}
+.lv-cards__grid {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.lv-card {
+    position: relative;
+    padding: 28px 32px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(20, 30, 70, 0.06);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.8) inset,
+        0 10px 30px rgba(20, 30, 80, 0.06);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.lv-card__header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 18px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(20, 30, 70, 0.06);
+}
+.lv-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(67, 102, 255, 0.08);
+    color: #2c44e6;
+}
+.lv-card__icon svg {
+    width: 18px;
+    height: 18px;
+}
+.lv-card__heading {
+    margin: 0;
+    font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: -0.005em;
+    color: #0c111d;
+}
+.lv-card__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+.lv-card__row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(20, 30, 70, 0.05);
+}
+.lv-card__row:last-child {
+    border-bottom: none;
+    padding-bottom: 4px;
+}
+.lv-card__row-icon {
+    flex: 0 0 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #4366ff;
+    margin-top: 2px;
+}
+.lv-card__row-icon svg {
+    width: 18px;
+    height: 18px;
+}
+.lv-card__row-text {
+    flex: 1;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: #344054;
+}
+
+/* ── Longevity: responsive ───────────────────────────────────────── */
+
+@media (max-width: 900px) {
+    .lv-cards__grid {
+        grid-template-columns: 1fr;
+    }
+    .lv-cards { margin-top: -100px; }
+}
+
+@media (max-width: 640px) {
+    .lv-hero { padding: 16px 14px 0; }
+    .lv-nav { padding: 12px 18px; }
+    .lv-nav__logo { height: 18px; }
+    .lv-nav__badge { font-size: 12px; }
+    .lv-hero__content {
+        padding: 44px 4px 160px;
+        gap: 20px;
+    }
+    .lv-hero__eyebrow { font-size: 11px; letter-spacing: 0.18em; }
+    .lv-hero__subtitle { font-size: 14.5px; }
+    .lv-cta {
+        min-width: 0;
+        width: 100%;
+        padding: 16px 24px;
+        font-size: 15.5px;
+    }
+    .lv-trust { font-size: 12px; gap: 8px 10px; }
+    .lv-cards { padding: 0 14px 60px; }
+    .lv-card { padding: 22px 22px; border-radius: 16px; }
+    .lv-card__heading { font-size: 22px; }
+    .lv-card__row { padding: 12px 0; }
+    .lv-card__row-text { font-size: 14px; }
+}
