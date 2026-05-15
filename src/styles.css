@@ -1057,11 +1057,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     padding: 0;
     max-width: 1080px;
     display: grid;
-    gap: var(--space-4);
-    /* `auto-fit` collapses empty tracks → with 2 items each fills half
-       the row (~520px), with 3 items each gets ~340px, with 4 items
-       each gets ~250px. Min 240px keeps the title legible. */
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    /* Mobile default: force 2 columns so cards always sit side-by-side
+       on phones — `auto-fit minmax(240, 1fr)` collapses to a single
+       column under 256px which is too narrow for our viewport. */
+    gap: var(--space-3);
+    grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 640px) {
+    .ep-feature-cards__grid {
+        /* Tablet+ goes back to auto-fit — 2 cards fill the row, 3 cards
+           take a third, 4 cards take a quarter (down to 240px min). */
+        gap: var(--space-4);
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
 }
 .ep-feature-cards__item {
     display: flex;
@@ -1115,6 +1123,34 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     font-weight: var(--font-regular);
     line-height: var(--leading-relaxed);
     color: var(--text-secondary);
+}
+
+/* Mobile compaction — cards become ~160px wide once forced to 2-col,
+   so trim padding, icon, type sizes so the content still breathes. */
+@media (max-width: 640px) {
+    .ep-feature-cards__item {
+        padding: var(--space-4);
+        gap: var(--space-2);
+    }
+    .ep-feature-cards__header {
+        gap: var(--space-2);
+    }
+    .ep-feature-cards__icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+    .ep-feature-cards__icon svg {
+        width: 18px;
+        height: 18px;
+    }
+    .ep-feature-cards__heading {
+        font-size: var(--text-base);
+    }
+    .ep-feature-cards__desc {
+        font-size: 13px;
+        line-height: var(--leading-normal);
+    }
 }
 
 @media (max-width: 480px) {
