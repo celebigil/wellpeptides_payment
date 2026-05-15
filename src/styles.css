@@ -350,6 +350,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.6);
 }
+/* Hero-embedded CTA: tighter margins + flips the reassurance line to
+   translucent-white so it stays legible on the dark hero. The pill
+   itself reuses the same .ep-cta token (mavi on dark = high contrast). */
+.ep-hero__cta {
+    margin-top: var(--space-2);
+}
+.ep-hero__cta .ep-cta__wrap {
+    align-items: flex-start;
+    margin: 0;
+    gap: var(--space-3);
+}
+.ep-hero__cta .ep-cta__reassurance {
+    color: rgba(255, 255, 255, 0.6);
+    justify-content: flex-start;
+}
+.ep-hero__cta .ep-cta__reassurance-dot {
+    color: rgba(255, 255, 255, 0.25);
+}
+.ep-hero__cta .ep-cta--secondary {
+    background: transparent;
+    color: var(--color-white);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+.ep-hero__cta .ep-cta--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    border-color: var(--color-white);
+}
+
 .ep-hero__scroll-hint {
     position: absolute;
     bottom: 16px;
