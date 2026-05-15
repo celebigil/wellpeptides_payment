@@ -98,11 +98,7 @@ export default function SiteFooter() {
                                     Refund Policy
                                 </a>
                             </li>
-                            <li>
-                                <a href={`${STOREFRONT_ORIGIN}/shipping`} rel="noopener" target="_blank">
-                                    Shipping &amp; Returns
-                                </a>
-                            </li>
+
                         </ul>
                     </div>
 
