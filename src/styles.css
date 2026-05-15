@@ -162,33 +162,39 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 /* Trust strip lives INSIDE the hero (blocks/Hero.jsx), pinned to the
    bottom edge by `margin-top: auto` against the hero's flex column.
-   The wrapper is transparent so the dark hero bg shows through; the
-   pills keep their own white background and become floating chips. */
+   Plain text + icon — same faded white as the hero subtitle/tagline;
+   no pill backgrounds, no borders. */
 .ep-trust-strip {
     position: relative;
     z-index: 1;
     width: 100%;
+    /* margin-top:auto already pushes the strip to the bottom of the
+       flex hero, but on short heroes the gap collapses — keep an
+       explicit min-top to guarantee separation from the CTA above. */
     margin-top: auto;
-    padding: var(--space-4) 0 0;
+    padding: var(--space-12) 0 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-2) var(--space-6);
     background: transparent;
 }
 .ep-trust-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 12px;
-    background: var(--color-white);
-    border: 1px solid var(--color-gray-200);
-    border-radius: var(--radius-full);
-    color: var(--text-tertiary);
+    padding: 0;
+    background: transparent;
+    border: none;
+    /* Matches .ep-hero__subtitle / .ep-hero__tagline so the strip reads
+       as part of the hero's voice rather than a UI widget. SVGs use
+       currentColor so icons follow this tint automatically. */
+    color: rgba(255, 255, 255, 0.6);
     font-family: var(--font-sans);
     font-size: var(--text-xs);
     font-weight: var(--font-regular);
+    letter-spacing: 0.02em;
 }
 .ep-site-footer__bottom {
     /* Trust strip already provides a border-bottom; no need for a top
