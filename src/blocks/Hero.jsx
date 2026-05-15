@@ -1,8 +1,12 @@
 // Hero block — mirrors the new_wel canonical hero (NewHomePage6):
 // black backdrop, optional video/image bg under a dark overlay, big
 // Aeonik white headline left-aligned, faded white subtitle, optional
-// CTA pill inline at the bottom (when data.cta is set), scroll hint.
+// CTA pill inline at the bottom (when data.cta is set), and a fixed
+// trust strip pinned to the very bottom of the hero. The trust strip
+// used to sit below the hero — moved inside so the first viewport
+// carries both the brand statement and the reassurance signals.
 import CtaButton from "./CtaButton.jsx";
+import TrustStrip from "../layout/TrustStrip.jsx";
 
 export default function Hero({ blockId, data, page }) {
     const { headline, subheadline, tagline, image_url, video_url, bg_color, cta } = data || {};
@@ -45,9 +49,7 @@ export default function Hero({ blockId, data, page }) {
                     </div>
                 ) : null}
             </div>
-            <div className="ep-hero__scroll-hint" aria-hidden="true">
-                <span className="ep-hero__scroll-line" />
-            </div>
+            <TrustStrip />
         </section>
     );
 }

@@ -14,7 +14,9 @@ import Faq from "./blocks/Faq.jsx";
 import FeatureCards from "./blocks/FeatureCards.jsx";
 import SiteHeader from "./layout/SiteHeader.jsx";
 import SiteFooter from "./layout/SiteFooter.jsx";
-import TrustStrip from "./layout/TrustStrip.jsx";
+// TrustStrip is now rendered INSIDE the Hero block (see blocks/Hero.jsx).
+// Landings without a hero won't show one — which is the correct trade-off
+// since trust strip without brand context above is just visual noise.
 
 const RENDERERS = {
     hero: Hero,
@@ -33,27 +35,16 @@ const RENDERERS = {
     feature_cards: FeatureCards,
 };
 
-// Render blocks in order, with TrustStrip auto-injected immediately
-// after the first hero block (or at the top when there's no hero).
-// Admin doesn't control this placement — the strip is part of the
-// landing's baseline trust frame.
 function Blocks({ blocks, page }) {
-    const heroIdx = blocks.findIndex((b) => b.type === "hero");
-    const trustInsertAfter = heroIdx >= 0 ? heroIdx : -1;
-
-    const out = [];
-    if (trustInsertAfter < 0) {
-        out.push(<TrustStrip key="__trust" />);
-    }
-    blocks.forEach((b, i) => {
-        const Renderer = RENDERERS[b.type];
-        if (!Renderer) return;
-        out.push(<Renderer key={b.id} blockId={b.id} data={b.data} page={page} />);
-        if (i === trustInsertAfter) {
-            out.push(<TrustStrip key="__trust" />);
-        }
-    });
-    return <>{out}</>;
+    return (
+        <>
+            {blocks.map((b) => {
+                const Renderer = RENDERERS[b.type];
+                if (!Renderer) return null;
+                return <Renderer key={b.id} blockId={b.id} data={b.data} page={page} />;
+            })}
+        </>
+    );
 }
 
 // Read PayPal return state from the URL — set when the BE redirects the

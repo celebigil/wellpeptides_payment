@@ -160,19 +160,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     margin: 0 auto;
     padding: var(--space-6) var(--container-padding);
 }
-/* Trust strip auto-rendered right below the hero (see layout/TrustStrip.jsx).
-   Same pills that used to live in the footer; moved up so cold IG traffic
-   sees the trust signal in the first viewport. */
+/* Trust strip lives INSIDE the hero (blocks/Hero.jsx), pinned to the
+   bottom edge by `margin-top: auto` against the hero's flex column.
+   The wrapper is transparent so the dark hero bg shows through; the
+   pills keep their own white background and become floating chips. */
 .ep-trust-strip {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin-top: auto;
+    padding: var(--space-4) 0 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: var(--space-3);
-    margin: 0 calc(-1 * var(--container-padding)) var(--space-10);
-    padding: var(--space-5) var(--container-padding);
-    background: var(--color-white);
-    border-bottom: 1px solid var(--color-gray-200);
+    gap: var(--space-2);
+    background: transparent;
 }
 .ep-trust-pill {
     display: inline-flex;
@@ -225,11 +228,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* No justify-content here — `.ep-hero__content` uses `margin: auto 0`
+       to vertically center, while the TrustStrip's `margin-top: auto`
+       pins it to the bottom. */
     text-align: center;
-    /* Tight top/bottom — keeps the dramatic dark moment without
-       pushing the CTA below the first scroll on mobile. */
-    padding: var(--space-10) var(--space-5) calc(var(--space-10) + 28px);
+    padding: var(--space-10) var(--space-5);
     background-color: #000;
     color: var(--color-white);
     overflow: hidden;
@@ -260,6 +263,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     z-index: 1;
     width: 100%;
     max-width: 720px;
+    /* margin: auto 0 centers content vertically in the flex column
+       while letting the TrustStrip sit at the bottom. */
+    margin: auto 0;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -321,29 +327,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border-color: var(--color-white);
 }
 
-.ep-hero__scroll-hint {
-    position: absolute;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-@keyframes ep-hero-scroll-pulse {
-    0%, 100% { height: 20px; opacity: 0.3; }
-    50%      { height: 32px; opacity: 0.7; }
-}
-.ep-hero__scroll-line {
-    display: block;
-    width: 1px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.4);
-    animation: ep-hero-scroll-pulse 2s ease-in-out infinite;
-}
-
 @media (min-width: 768px) {
     .ep-hero {
         min-height: 56svh;
-        padding: var(--space-12) var(--space-10) calc(var(--space-12) + 32px);
+        padding: var(--space-12) var(--space-10);
     }
     .ep-hero__content { max-width: 800px; gap: var(--space-6); }
     .ep-hero__title { font-size: clamp(48px, 7vw, 80px); }
