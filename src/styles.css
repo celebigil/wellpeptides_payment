@@ -1,16 +1,49 @@
-/* Google Fonts fallbacks for the brand stack defined in tokens.css.
-   Matiere Condensed → Oswald (geometric condensed display)
-   DIN               → Saira (industrial sans-serif)
-   FT Regola Neue    → Inter (humanist neogrotesque)
-   Cormorant retained for any leftover serif usage; will be removed
-   once we confirm no block renderer references it. */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Saira:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
 @import './tokens.css';
 
-/* Brand font files (Matiere Condensed / DIN / FT Regola Neue) are not
-   bundled yet — drop the .woff2/.otf files under assets/fonts/ and add
-   @font-face declarations here once they're available. Until then, the
-   Google Fonts fallbacks loaded above (Oswald/Saira/Inter) render. */
+/* ── Aeonik Pro (mirrors new_wel @font-face declarations) ─────────── */
+
+@font-face {
+    font-family: 'Aeonik Pro';
+    src: url('./assets/fonts/Aeonik Pro TRIAL Light/Web Fonts/081a86aab4f4d8f1ec6e058603847f1e.woff2') format('woff2'),
+         url('./assets/fonts/Aeonik Pro TRIAL Light/Web Fonts/081a86aab4f4d8f1ec6e058603847f1e.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aeonik Pro';
+    src: url('./assets/fonts/Aeonik Pro TRIAL/Aeonik Pro TRIAL.woff2') format('woff2'),
+         url('./assets/fonts/Aeonik Pro TRIAL/Aeonik Pro TRIAL.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aeonik Fono';
+    src: url('./assets/fonts/Aeonik_Fono/AeonikFono-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aeonik Fono';
+    src: url('./assets/fonts/Aeonik_Fono/AeonikFono-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aeonik Fono';
+    src: url('./assets/fonts/Aeonik_Fono/AeonikFono-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
 
 /* ── Base ─────────────────────────────────────────────────────────── */
 
@@ -266,6 +299,64 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .ep-text em { font-family: var(--font-serif); font-style: italic; }
 .ep-text ul, .ep-text ol { padding-left: var(--space-6); margin: 0 0 var(--space-4); }
 .ep-text li { margin: var(--space-2) 0; }
+
+/* ── Block: SectionHeader ─────────────────────────────────────────
+   Mirrors the new_wel section-title pattern (SignalsBundles): small
+   uppercase Aeonik Fono eyebrow, Aeonik Fono light title at 22-32px,
+   short Aeonik Pro subtitle. The pair stays compact so admins can place
+   it in front of a list/image/text block as a section label. */
+
+.ep-section-header {
+    margin: var(--space-12) auto var(--space-6);
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+.ep-section-header--center { align-items: center; text-align: center; }
+.ep-section-header--left   { align-items: flex-start; text-align: left; }
+
+.ep-section-header__eyebrow {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 12px;
+    font-weight: var(--font-regular);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+}
+.ep-section-header__title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 3.2vw, 32px);
+    font-weight: var(--font-light);
+    line-height: var(--leading-snug);
+    color: var(--text-primary);
+}
+.ep-section-header__subtitle {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: var(--font-regular);
+    line-height: var(--leading-normal);
+    color: var(--text-secondary);
+    max-width: 56ch;
+}
+
+/* Lighter, inline title for List/Image blocks — sits one notch below
+   the dedicated section-header block in the visual hierarchy. */
+.ep-block { margin: var(--space-8) 0; }
+.ep-block__title {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: var(--font-light);
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+}
+.ep-image__title {
+    text-align: center;
+}
 
 /* ── Block: Image ─────────────────────────────────────────────────── */
 

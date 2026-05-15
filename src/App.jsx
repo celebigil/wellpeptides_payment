@@ -1,4 +1,5 @@
 import Hero from "./blocks/Hero.jsx";
+import SectionHeader from "./blocks/SectionHeader.jsx";
 import Text from "./blocks/Text.jsx";
 import Image from "./blocks/Image.jsx";
 import List from "./blocks/List.jsx";
@@ -10,6 +11,7 @@ import SiteFooter from "./layout/SiteFooter.jsx";
 
 const RENDERERS = {
     hero: Hero,
+    section_header: SectionHeader,
     text: Text,
     image: Image,
     list: List,
