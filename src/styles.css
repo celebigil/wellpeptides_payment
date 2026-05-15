@@ -174,16 +174,25 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     margin-top: auto;
     padding: var(--space-12) 0 0;
     display: flex;
-    flex-wrap: wrap;
+    /* Always one row, even on the narrowest phone. If the labels would
+       run past the viewport we let the strip scroll horizontally with
+       the scrollbar hidden — the icons still tell the story. */
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    gap: var(--space-2) var(--space-6);
+    gap: var(--space-6);
     background: transparent;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
+.ep-trust-strip::-webkit-scrollbar { display: none; }
 .ep-trust-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    flex-shrink: 0;
+    white-space: nowrap;
     padding: 0;
     background: transparent;
     border: none;
@@ -195,6 +204,25 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     font-size: var(--text-xs);
     font-weight: var(--font-regular);
     letter-spacing: 0.02em;
+}
+/* Tight mobile sizing so the 4 labels fit a 360-375px viewport in one
+   row without scroll. Icons shrink via CSS overrides since the SVG
+   width/height attrs are hardcoded in TrustStrip.jsx. */
+@media (max-width: 640px) {
+    .ep-trust-strip {
+        gap: var(--space-3);
+        padding-left: var(--space-3);
+        padding-right: var(--space-3);
+    }
+    .ep-trust-pill {
+        font-size: 10px;
+        gap: 4px;
+        letter-spacing: 0.01em;
+    }
+    .ep-trust-pill svg {
+        width: 11px;
+        height: 11px;
+    }
 }
 .ep-site-footer__bottom {
     /* Trust strip already provides a border-bottom; no need for a top
