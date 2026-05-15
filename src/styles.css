@@ -362,12 +362,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     margin: 0;
     gap: var(--space-3);
 }
+/* Hero already projects trust through the dark hero treatment + the
+   trust badges block below it — the per-button reassurance line is
+   visual noise here, so hide it when the CTA lives inside the hero. */
 .ep-hero__cta .ep-cta__reassurance {
-    color: rgba(255, 255, 255, 0.6);
-    justify-content: center;
-}
-.ep-hero__cta .ep-cta__reassurance-dot {
-    color: rgba(255, 255, 255, 0.25);
+    display: none;
 }
 .ep-hero__cta .ep-cta--secondary {
     background: transparent;
