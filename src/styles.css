@@ -277,121 +277,103 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 /* ── Block: Hero ──────────────────────────────────────────────────────
-   Mirrors new_wel's center card (see new_wel/src/components/sections/
-   Hero.module.css). One contained card with a colored upper zone, the
-   text sitting on the color, the image overlapping the bottom edge of
-   the color and bleeding into the page background. UPPERCASE Aeonik
-   title + Aeonik Fono light subtitle keep the storefront's voice. */
+   Mirrors new_wel's canonical hero (NewHomePage6.module.css `.hero`):
+   solid black backdrop, optional video/image bg under a dark overlay,
+   big white Aeonik headline, faded white subtitle, scroll-hint line.
+   The hero breaks out of the 640px page column to fill the viewport so
+   the "real product site" feel reads even on cold Instagram traffic. */
 
 .ep-hero {
-    /* Break out of the 640px page column so the card feels editorial.
-       Full viewport width on tablet+, the inner card caps at a wider
-       value than the page column to give the storefront-style breathing
-       room without going edge-to-edge on huge monitors. */
     position: relative;
     left: 50%;
     margin-left: -50vw;
     width: 100vw;
-    margin-top: 0;
-    margin-bottom: var(--space-12);
-    padding: 0;
-    background: var(--color-white);
-}
-.ep-hero__card {
-    width: 100%;
-    max-width: 760px;
-    margin: 0 auto;
-}
-@media (min-width: 768px) {
-    .ep-hero__card { max-width: 900px; }
-}
-@media (min-width: 1024px) {
-    .ep-hero__card { max-width: 1080px; }
-}
-.ep-hero__inner {
-    position: relative;
-    padding: var(--space-10) var(--space-6) 0;
-}
-/* Colored top zone — height tuned to land just past the text so the
-   image sits on the seam between colored zone and page bg. */
-.ep-hero__inner::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 65%;
-    background-color: var(--ep-hero-bg, #DDD3B9);
-    z-index: 0;
-    transition: background-color var(--transition-base);
-}
-.ep-hero__text {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 0 var(--space-4);
+    min-height: 70svh;
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
-    margin-bottom: var(--space-6);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-16) var(--space-5) calc(var(--space-16) + 60px);
+    background-color: #000;
+    color: var(--color-white);
+    overflow: hidden;
+    margin-bottom: var(--space-12);
+}
+.ep-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+.ep-hero__video,
+.ep-hero__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.ep-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+}
+.ep-hero__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 720px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
 }
 .ep-hero__title {
     margin: 0;
     font-family: var(--font-sans);
-    font-size: 20px;
-    font-weight: var(--font-regular);
-    color: var(--text-primary);
-    /* tracking-widest from new_wel (var(--tracking-widest) = 0.2em).
-       Uppercasing matches the storefront's BIO-IDENTITY card. */
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    line-height: 28px;
+    font-size: var(--hero-title-size, clamp(32px, 8vw, 64px));
+    font-weight: var(--font-semibold);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--color-white);
 }
 .ep-hero__subtitle {
     margin: 0;
-    font-family: var(--font-serif);
-    font-size: 16px;
-    font-weight: var(--font-light);
-    color: var(--text-primary);
-    line-height: 24px;
+    font-family: var(--font-sans);
+    font-size: var(--hero-subtitle-size, clamp(18px, 2.4vw, 24px));
+    font-weight: var(--font-medium);
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.6);
 }
-.ep-hero__image {
-    position: relative;
+.ep-hero__scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
-    width: 80%;
-    margin: 0 auto;
-    overflow: hidden;
 }
-.ep-hero__image img {
-    width: 100%;
-    height: auto;
+@keyframes ep-hero-scroll-pulse {
+    0%, 100% { height: 20px; opacity: 0.3; }
+    50%      { height: 32px; opacity: 0.7; }
+}
+.ep-hero__scroll-line {
     display: block;
-    object-fit: cover;
+    width: 1px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    animation: ep-hero-scroll-pulse 2s ease-in-out infinite;
 }
 
 @media (min-width: 768px) {
     .ep-hero {
-        padding: var(--space-10) 0 var(--space-16);
+        min-height: 78svh;
+        padding: var(--space-20) var(--space-10) calc(var(--space-20) + 60px);
     }
-    .ep-hero__inner {
-        padding: var(--space-12) var(--space-10) 0;
-    }
-    .ep-hero__inner::before {
-        height: 75%;
-    }
-    .ep-hero__text {
-        padding: 0 var(--space-10);
-        gap: var(--space-6);
-        margin-bottom: var(--space-10);
-    }
-    .ep-hero__title {
-        font-size: 30px;
-        line-height: 1.1;
-    }
-    .ep-hero__subtitle {
-        font-size: 24px;
-        line-height: 36px;
-    }
+    .ep-hero__content { max-width: 800px; gap: var(--space-8); }
+    .ep-hero__title { font-size: clamp(48px, 7vw, 80px); }
 }
 
 /* ── Block: Text ──────────────────────────────────────────────────── */
