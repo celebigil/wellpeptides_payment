@@ -13,7 +13,7 @@ const STOREFRONT_ORIGIN = "https://wellsociety.com";
 const SUPPORT_EMAIL = "support@wellsociety.com";
 
 const DISCLAIMER =
-    "Well Society products are research compounds intended for laboratory and research use only. Not for human or veterinary diagnosis, prevention, or treatment.";
+    "";
 
 export default function SiteFooter() {
     const year = new Date().getFullYear();
