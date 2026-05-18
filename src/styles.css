@@ -1075,23 +1075,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 .ep-feature-cards__item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    /* Plain block layout (no flex) — same as .lv-card. Spacing between
+       header and body is driven by the header's margin-bottom, not by
+       a parent gap, so it matches the longevity card pixel-for-pixel. */
     padding: 36px 36px 40px;
     background: #ffffff;
     border: 1px solid #e8e4de;
     border-radius: 20px;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
 }
-/* Icon + title share a row above the description — icon sits flush
-   without a backing tile (matches .lv-card__header). */
+/* Icon + title share a row above the body — icon sits flush without
+   a backing tile (matches .lv-card__header). */
 .ep-feature-cards__header {
     display: flex;
     align-items: center;
     gap: 14px;
-    width: 100%;
+    margin-bottom: 28px;
 }
 .ep-feature-cards__icon {
     display: inline-flex;

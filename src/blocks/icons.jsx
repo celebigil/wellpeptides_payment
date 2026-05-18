@@ -83,6 +83,97 @@ export function Icon({ name, size = 18 }) {
                           stroke={stroke} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
             );
+        /* ── Longevity vocabulary — kept 1:1 with LongevityLanding's `I()` so
+           feature_cards bullets can use the same icon names as the longevity
+           template's bottom cards. Stroke attrs match (1.8, round/round). */
+        case "sparkle":
+        case "star":
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/>
+                </svg>
+            );
+        case "target":
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <line x1="12" y1="2" x2="12" y2="6"/>
+                    <line x1="12" y1="18" x2="12" y2="22"/>
+                    <line x1="2" y1="12" x2="6" y2="12"/>
+                    <line x1="18" y1="12" x2="22" y2="12"/>
+                </svg>
+            );
+        case "chart":
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <line x1="18" y1="20" x2="18" y2="10"/>
+                    <line x1="12" y1="20" x2="12" y2="4"/>
+                    <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+            );
+        case "user":
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            );
+        case "chat":
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            );
+        case "shield-check":
+            // Solid shield silhouette — matches LongevityLanding's "shield-check"
+            // (which is intentionally the same simple shield, no inner check).
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+            );
+        case "clipboard":
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+            );
+        case "globe":
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+            );
+        case "age":
+        case "info":
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+            );
+        case "clock":
+            return (
+                <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke}
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg>
+            );
         default:
             return null;
     }
